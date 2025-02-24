@@ -1,0 +1,49 @@
+query Tag($locale: SiteLocale, $fallbackLocale: [SiteLocale!], $slug: String) {
+  tag(
+    filter: { slug: { eq: $slug } }
+    locale: $locale
+    fallbackLocales: $fallbackLocale
+  ) {
+    id
+    tag
+    _modelApiKey
+    slugs: _allSlugLocales {
+      locale
+      value
+    }
+    seo: _seoMetaTags {
+      ...seoMetaFragment
+    }
+    hero {
+      ...heroFragment
+    }
+    sections {
+      ... on SectionWrapRecord {
+        id
+        label
+        _modelApiKey
+        title
+        style
+        blocks {
+          ...wrapSectionBlocks
+        }
+      }
+    }
+    posts: _allReferencingPosts(
+      filter: { title: { isBlank: "false" } }
+      orderBy: _createdAt_DESC
+      first: "100"
+      locale: $locale
+    ) {
+      ...postPreviewFragment
+    }
+    events: _allReferencingEvents(
+      filter: { title: { isBlank: "false" } }
+      orderBy: _createdAt_DESC
+      first: "100"
+      locale: $locale
+    ) {
+      ...eventPreviewFragment
+    }
+  }
+}

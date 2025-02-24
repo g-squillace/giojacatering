@@ -1,0 +1,33 @@
+fragment productDetailRecord on ProductDetailRecord {
+  id
+  title
+  description
+  label
+  link {
+    ... on InternalLinkRecord {
+      ...internalLink
+    }
+    ... on ExternalLinkRecord {
+      ...externalLink
+    }
+  }
+  _modelApiKey
+  productDetailImage {
+    responsiveImage(
+      sizes: "(min-width:768px) 50vw, 100vw, 400px"
+      imgixParams: { auto: [format, compress], fit: max }
+    ) {
+      ...rImage
+    }
+  }
+  imageDescription
+  logo {
+    url
+  }
+  values {
+    id
+    key
+    value
+    star
+  }
+}

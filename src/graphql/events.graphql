@@ -1,0 +1,13 @@
+query Events($locale: SiteLocale, $skip: IntType) {
+  allEvents(
+    orderBy: _createdAt_DESC
+    first: "100"
+    locale: $locale
+    skip: $skip
+  ) {
+    ...eventPreviewFragment
+  }
+  _allEventsMeta(locale: $locale, filter: { title: { isBlank: "false" } }) {
+    count
+  }
+}

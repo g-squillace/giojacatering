@@ -1,0 +1,99 @@
+{
+  "locale": "English",
+  "layout": {
+    "open_new_window": "Open in new window",
+    "close": "Close",
+    "main_page": "Main page",
+    "search_label": "Search the website",
+    "search_placeholder": "Search for artworks, events or else"
+  },
+
+  "a11y": {
+    "firstSlideMessage": "This is the first slide",
+    "lastSlideMessage": "This is the last slide",
+    "nextSlideMessage": "Next slide",
+    "prevSlideMessage": "Previous slide",
+    "paginationBulletMessage": "Go to slide "
+  },
+
+  "sending": "sending...",
+  "loading": "loading...",
+
+  "credits": {
+    "text": "Website design & development",
+    "url": "https://www.cantierecreativo.net",
+    "title": "Web agency & digital partner based in Florence"
+  },
+
+  "404": {
+    "title": "Page not found",
+    "text": "The address may be misspelled or may not exist.",
+    "button": "Go to the homepage"
+  },
+
+  "pagination": {
+    "start": "First",
+    "end": "Last",
+    "forward": "Forward",
+    "back": "Back"
+  },
+
+  "search-pagination": {
+    "firstPageItemText": "First page",
+    "previousPageItemText": "Previous page",
+    "nextPageItemText": "Next page",
+    "lastPageItemText": "Last page",
+    "firstPageItemAriaLabel": "Go to first page",
+    "previousPageItemAriaLabel": "Go to previous page",
+    "nextPageItemAriaLabel": "Go to next page",
+    "lastPageItemAriaLabel": "Go to last page",
+    "gotoPage": "Go to page",
+    "of": "of"
+  },
+
+  "formTitle": "Send us a message",
+  "events_from": "Events from",
+  "formFullName": "Name",
+  "formLastName": "Last Name",
+  "formEmail": "Email",
+  "formPhoneNumber": "Phone number",
+  "formMessage": "Request",
+  "formPrivacyPolicy": "I agree to ",
+  "formPrivacyFieldsetLabel": "Data protection",
+  "formPrivacyPre": "I've read the ",
+  "formPrivacyAfter": " and accept the terms of UE 2016/679 (GDPR)",
+  "formSend": "Send request",
+  "formSandingTitle": "Sending...",
+  "formSuccessTitle": "The message has been successfully sent",
+  "formSuccessText": "We have received your message and you will be contacted as soon as possible.",
+  "formErrorTitle": "An error has occurred",
+  "formErrorText": "Your message could not be sent.",
+
+  "newsletter": {
+    "title:": "Newsletter",
+    "accept": "By entering your email address, you consent to receive communications and updates from us. Your data will be processed in accordance with our",
+    "policy": "Privacy Policy",
+    "authorize": "and will not be shared with third parties. You can unsubscribe at any time by clicking the unsubscribe link included in every email.",
+    "subscribe": "subscribe"
+  },
+
+  "preferencePolicy": "Edit privacy preferences",
+  "cookiePolicyId": "",
+
+  "skipContent": "Go to main content",
+  "skipFooter": "Go to footer",
+
+  "splide": {
+    "homeTitle": "Highlighted elements",
+    "hypervisionsTitle": "Hypervisions elements",
+    "CarosulTitle": "Gallery of images",
+    "play": "Start autoplay",
+    "pause": "Pause autoplay",
+    "slideX": "Go to slide",
+    "slideLabel": "of"
+  },
+
+  "backTop": "Back to top",
+  "googleMaps": "Google Maps",
+  "read": "read"
+}

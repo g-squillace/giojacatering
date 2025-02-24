@@ -1,0 +1,16 @@
+fragment internalLink on InternalLinkRecord {
+  __typename
+  _modelApiKey
+  id
+  label
+  page {
+    __typename
+    _modelApiKey
+    id
+    slug
+    slugs: _allSlugLocales {
+      locale
+      value
+    }
+  }
+}

@@ -1,0 +1,18 @@
+fragment multipleCardRecord on MultipleCardRecord {
+  id
+  _modelApiKey
+  multipleImages {
+    id
+    _modelApiKey
+    imageDescription
+    imageAsset {
+      responsiveImage(
+        sizes: "(min-width:768px) 50vw, (min-width:1024px) 25vw, 90vw, 400px"
+        imgixParams: { auto: [format, compress], fit: crop, ar: "3:4" }
+      ) {
+        ...rImage
+      }
+      id
+    }
+  }
+}

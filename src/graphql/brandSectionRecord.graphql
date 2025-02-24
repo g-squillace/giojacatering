@@ -1,0 +1,17 @@
+fragment brandSectionRecord on BrandSectionRecord {
+  id
+  _modelApiKey
+  __typename
+  titleBrand
+  textBrand
+  brands {
+    id
+    _modelApiKey
+    __typename
+    brandName
+    brandUrl
+    brandLogo {
+      url
+    }
+  }
+}

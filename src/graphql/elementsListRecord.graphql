@@ -1,0 +1,20 @@
+fragment elementsListRecord on ElementsListRecord {
+  id
+  _modelApiKey
+  __typename
+  itemsPrefix
+  itemsTitle
+  itemsButton {
+    ...internalLink
+  }
+  automatic
+  model
+  elements {
+    ... on PostRecord {
+      ...postPreviewFragment
+    }
+    ... on EventRecord {
+      ...eventPreviewFragment
+    }
+  }
+}

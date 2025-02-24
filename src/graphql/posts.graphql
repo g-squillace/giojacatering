@@ -1,0 +1,50 @@
+query Posts($locale: SiteLocale, $skip: IntType) {
+  allPosts(
+    orderBy: _createdAt_DESC
+    first: "100"
+    locale: $locale
+    skip: $skip
+  ) {
+    _publishedAt
+    _modelApiKey
+    slugs: _allSlugLocales {
+      locale
+      value
+    }
+    slug
+    id
+    title
+    tags {
+      tag
+    }
+    seoTags {
+      description
+      image {
+        responsiveImage {
+          srcSet
+          webpSrcSet
+          sizes
+          src
+          width
+          height
+          aspectRatio
+          alt
+          title
+          bgColor
+          base64
+        }
+      }
+    }
+    blogImage {
+      responsiveImage(
+        sizes: "(min-width:768px) 50vw, (min-width:1024px) 33vw, 100vw, 500px"
+        imgixParams: { auto: [format, compress], fit: crop, ar: "7:8" }
+      ) {
+        ...rImage
+      }
+    }
+  }
+  _allPostsMeta(locale: $locale, filter: { title: { isBlank: "false" } }) {
+    count
+  }
+}

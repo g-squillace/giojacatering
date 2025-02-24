@@ -1,0 +1,16 @@
+fragment slideshowRecord on SlideshowRecord {
+  id
+  _modelApiKey
+  slides {
+    id
+    title
+    text
+    image {
+      responsiveImage(
+        imgixParams: { auto: format, ar: "4:3", fit: crop, h: 720 }
+      ) {
+        ...rImage
+      }
+    }
+  }
+}

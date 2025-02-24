@@ -1,0 +1,80 @@
+query Post($slug: String, $locale: SiteLocale, $fallbackLocale: [SiteLocale!]) {
+  post(
+    filter: { slug: { eq: $slug }, title: { isBlank: "false" } }
+    locale: $locale
+    fallbackLocales: $fallbackLocale
+  ) {
+    _publishedAt
+    _modelApiKey
+    date: _createdAt
+    title
+    abstract
+    blogImage {
+      responsiveImage(
+        sizes: "(min-width:768px) 80vw, 100vw, 1200px"
+        imgixParams: { auto: [format, compress], fit: crop, ar: "2:1" }
+      ) {
+        ...rImage
+      }
+    }
+    tags {
+      id
+      tag
+      slug
+      _modelApiKey
+      slugs: _allTagLocales {
+        locale
+        value
+      }
+    }
+    slugs: _allSlugLocales {
+      locale
+      value
+    }
+    content {
+      value
+      links {
+        _publishedAt
+        __typename
+        slug
+        id
+        title
+        tags {
+          tag
+        }
+        seoTags {
+          description
+          image {
+            responsiveImage {
+              srcSet
+              webpSrcSet
+              sizes
+              src
+              width
+              height
+              aspectRatio
+              alt
+              title
+              bgColor
+              base64
+            }
+          }
+        }
+      }
+      blocks {
+        ... on ImageBlockRecord {
+          ...imageBlockRecord
+        }
+        ... on AttachmentsBlockRecord {
+          ...attachmentsBlockRecord
+        }
+        ... on VideoSectionRecord {
+          ...videoSectionRecord
+        }
+        ... on GallerySectionRecord {
+          ...gallerySectionRecord
+        }
+      }
+    }
+  }
+}

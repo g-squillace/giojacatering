@@ -1,0 +1,23 @@
+fragment postPreviewFragment on PostRecord {
+  _publishedAt
+  _modelApiKey
+  slug
+  id
+  _createdAt
+  title
+  slugs: _allSlugLocales {
+    locale
+    value
+  }
+  tags {
+    tag
+  }
+  blogImage {
+    responsiveImage(
+      sizes: "(min-width:768px) 50vw, 100vw, 600px"
+      imgixParams: { auto: [format, compress], fit: crop, ar: "7:5" }
+    ) {
+      ...rImage
+    }
+  }
+}

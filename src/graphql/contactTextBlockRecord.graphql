@@ -1,0 +1,13 @@
+fragment contactTextBlockRecord on ContactTextBlockRecord {
+  id
+  _modelApiKey
+  prefix
+  titleContactBlock
+  textContactBlock
+  blocks {
+    id
+    _modelApiKey
+    titleSimple
+    textSimple
+  }
+}

@@ -1,0 +1,24 @@
+fragment eventPreviewFragment on EventRecord {
+  _publishedAt
+  _modelApiKey
+  slugs: _allSlugLocales {
+    locale
+    value
+  }
+  slug
+  id
+  title
+  dateEndEvent
+  dateStartEvent
+  tags {
+    tag
+  }
+  eventImage {
+    responsiveImage(
+      sizes: "(min-width:768px) 50vw, 100vw, 00px"
+      imgixParams: { auto: [format, compress], fit: crop, ar: "7:5" }
+    ) {
+      ...rImage
+    }
+  }
+}

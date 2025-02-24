@@ -1,0 +1,23 @@
+fragment teamBlockRecord on TeamBlockRecord {
+  id
+  _modelApiKey
+  __typename
+  title
+  subtitle
+  teamMembers {
+    id
+    _modelApiKey
+    __typename
+    nameMember
+    phoneMember
+    emailMember
+    descriptionMember
+    imageMember {
+      responsiveImage(
+        imgixParams: { auto: format, ar: "1:1", fit: crop, h: 300 }
+      ) {
+        ...rImage
+      }
+    }
+  }
+}

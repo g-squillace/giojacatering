@@ -1,0 +1,44 @@
+fragment heroFragment on HeroSectionRecord {
+  link {
+    ... on InternalLinkRecord {
+      ...internalLink
+    }
+    ... on ExternalLinkRecord {
+      ...externalLink
+    }
+  }
+  _modelApiKey
+  id
+  heroSubtitle
+  heroTitle
+  displayOptions
+  heroImage {
+    responsiveImage(
+      sizes: "100vw"
+      imgixParams: { auto: [format, compress], h: 750, w: 1600, fit: crop }
+    ) {
+      ...rImage
+    }
+  }
+  sliders {
+    id
+    title
+    text
+    image {
+      responsiveImage(
+        sizes: "100vw"
+        imgixParams: { auto: [format, compress], h: 750, w: 1600, fit: crop }
+      ) {
+        ...rImage
+      }
+    }
+    link {
+      ... on InternalLinkRecord {
+        ...internalLink
+      }
+      ... on ExternalLinkRecord {
+        ...externalLink
+      }
+    }
+  }
+}

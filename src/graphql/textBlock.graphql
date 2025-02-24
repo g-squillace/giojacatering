@@ -1,0 +1,19 @@
+fragment textBlockRecord on TextBlockRecord {
+  id
+  _modelApiKey
+  __typename
+  displayOptions
+  labelTextBlock
+  titleTextBlock
+  textTextBlock {
+    value
+  }
+  linkTextBlock {
+    ... on InternalLinkRecord {
+      ...internalLink
+    }
+    ... on ExternalLinkRecord {
+      ...externalLink
+    }
+  }
+}

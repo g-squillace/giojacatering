@@ -1,0 +1,14 @@
+fragment featureListSectionRecord on FeatureListSectionRecord {
+  id
+  _modelApiKey
+  featuresHeader
+  featuresSubheader
+  feature {
+    id
+    featureTitle
+    featureDescription
+    featureIcon {
+      url
+    }
+  }
+}

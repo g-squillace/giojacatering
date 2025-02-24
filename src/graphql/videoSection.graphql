@@ -1,0 +1,29 @@
+fragment videoSectionRecord on VideoSectionRecord {
+  _modelApiKey
+  __typename
+  id
+  videoHeader
+  videoSubheader
+  internalVideo {
+    video {
+      muxPlaybackId
+      title
+      width
+      height
+      blurUpThumb
+      mp4Url(res: medium)
+      thumbnailUrl(format: jpg)
+      muxAssetId
+      framerate
+      duration
+      muxPlaybackId
+      streamingUrl
+    }
+  }
+  externalVideo {
+    url
+    provider
+    providerUid
+    thumbnailUrl
+  }
+}

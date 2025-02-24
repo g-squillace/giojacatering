@@ -1,0 +1,6 @@
+fragment formBlockRecord on FormBlockRecord {
+  _modelApiKey
+  id
+  titleForm
+  textForm
+}

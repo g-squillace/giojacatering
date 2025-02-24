@@ -1,0 +1,36 @@
+fragment bannerCtaRecord on BannerCtaRecord {
+  id
+  _modelApiKey
+  displayOptions
+  label
+  title
+  text {
+    value
+  }
+  bannerCtaImage {
+    id
+    responsiveImage(
+      sizes: "(min-width:1024px) 60vw, 90vw, 990px"
+      imgixParams: { auto: [format, compress], fit: max }
+    ) {
+      ...rImage
+    }
+  }
+  coverImage: bannerCtaImage {
+    id
+    responsiveImage(
+      sizes: "100vw, 1500px"
+      imgixParams: { auto: [format, compress], fit: max }
+    ) {
+      ...rImage
+    }
+  }
+  link {
+    ... on InternalLinkRecord {
+      ...internalLink
+    }
+    ... on ExternalLinkRecord {
+      ...externalLink
+    }
+  }
+}

@@ -1,0 +1,25 @@
+query Product(
+  $slug: String
+  $locale: SiteLocale
+  $fallbackLocale: [SiteLocale!]
+) {
+  product(
+    filter: { slug: { eq: $slug }, title: { isBlank: "false" } }
+    locale: $locale
+    fallbackLocales: $fallbackLocale
+  ) {
+    _publishedAt
+    _modelApiKey
+    id
+    title
+    abstract
+    productImage {
+      responsiveImage(
+        sizes: "(min-width:768px) 50vw, 100vw, 400px"
+        imgixParams: { auto: [format, compress], fit: max }
+      ) {
+        ...rImage
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+query Menu($locale: SiteLocale, $fallbackLocale: [SiteLocale!]) {
+  layout(locale: $locale, fallbackLocales: $fallbackLocale) {
+    logo {
+      url
+      alt
+    }
+    logoAlt {
+      url
+      alt
+    }
+    menu {
+      ... on MenuItemRecord {
+        id
+        title
+        _modelApiKey
+        page {
+          slug
+          slugs: _allSlugLocales {
+            locale
+            value
+          }
+          _modelApiKey
+        }
+      }
+      ... on MenuDropdownRecord {
+        id
+        title
+        _modelApiKey
+        dropdownType
+        items {
+          ... on MenuItemRecord {
+            id
+            title
+            _modelApiKey
+            page {
+              slug
+              slugs: _allSlugLocales {
+                locale
+                value
+              }
+              _modelApiKey
+            }
+          }
+        }
+        megaItems {
+          ... on MegaMenuItemRecord {
+            id
+            title
+            menuImage {
+              responsiveImage(
+                imgixParams: { auto: format, ar: "4:3", fit: crop, h: 300 }
+              ) {
+                ...rImage
+              }
+            }
+            _modelApiKey
+            page {
+              slug
+              slugs: _allSlugLocales {
+                locale
+                value
+              }
+              _modelApiKey
+            }
+          }
+        }
+      }
+    }
+  }
+  _site {
+    locales
+  }
+}
+
+fragment DatoImage_responsiveImage on ResponsiveImage {
+  src
+  srcSet
+  base64
+  width
+  height
+  alt
+  title
+}

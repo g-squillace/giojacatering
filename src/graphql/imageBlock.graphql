@@ -1,0 +1,14 @@
+fragment imageBlockRecord on ImageBlockRecord {
+  id
+  __typename
+  _modelApiKey
+  imageDescription
+  imageAsset {
+    responsiveImage(
+      sizes: "(min-width:768px) 80vw, 100vw, 1200px"
+      imgixParams: { auto: [format, compress], fit: max }
+    ) {
+      ...rImage
+    }
+  }
+}

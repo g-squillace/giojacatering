@@ -1,0 +1,106 @@
+{
+  "locale": "Italiano",
+  "layout": {
+    "open_new_window": "Apre in un'altra finestra",
+    "close": "Chiudi",
+    "main_page": "Pagina principale",
+    "search_label": "Cerca nel sito",
+    "search_placeholder": "Cerca un'opera, evento, etc..."
+  },
+
+  "a11y": {
+    "firstSlideMessage": "Questa è la prima slide",
+    "lastSlideMessage": "Questa è l'ultima slide",
+    "nextSlideMessage": "Slide successiva",
+    "prevSlideMessage": "Slide precedente",
+    "paginationBulletMessage": "Vai alla slide "
+  },
+
+  "sending": "inviando...",
+  "loading": "caricando...",
+  "credits": {
+    "text": "Progettazione e sviluppo",
+    "url": "https://www.cantierecreativo.net",
+    "title": "Cantiere Creativo Agenzia web Ruby on Rails Firenze"
+  },
+
+  "404": {
+    "title": "Pagina non trovata",
+    "text": "La pagina che stai cercando non esiste, o l'indirizzo inserito non è corretto.",
+    "button": "Vai alla pagina iniziale"
+  },
+
+  "pagination": {
+    "start": "Inizio",
+    "end": "Fine",
+    "forward": "Avanti",
+    "back": "Indietro",
+    "title": "Paginazione",
+    "pagePrev": "Vai alla pagina precedente",
+    "pageNext": "Vai alla pagina successiva",
+    "pageGoTo": "Vai a pagina",
+    "pageOf": "di"
+  },
+
+  "search-pagination": {
+    "firstPageItemText": "Inizio",
+    "previousPageItemText": "Indietro",
+    "nextPageItemText": "Avanti",
+    "lastPageItemText": "Fine",
+    "firstPageItemAriaLabel": "Vai alla pagina iniziale",
+    "previousPageItemAriaLabel": "Vai alla pagina prececdente",
+    "nextPageItemAriaLabel": "Vai alla pagina successiva",
+    "lastPageItemAriaLabel": "Vai all'ultima pagina",
+    "gotoPage": "Vai alla pagina",
+    "of": "di"
+  },
+
+  "formTitle": "Scrivici",
+  "formFullName": "Nome",
+  "formLastName": "Cognome",
+  "formEmail": "Email",
+  "formMessage": "Messaggio",
+  "formPhoneNumber": "Telefono",
+  "formPrivacyPolicy": "Ho preso visione e accetto le condizioni della ",
+  "formPrivacyFieldsetLabel": "Protezione e gestione dati personali",
+  "formPrivacyPre": "Letta la ",
+  "formPrivacyAfter": " accetto ai sensi del Regolamento UE 2016/679 (GDPR)",
+  "aaa_famiglie": "Famiglie",
+  "aaa_scuola": "Scuola",
+  "aaa_studiosi": "Studiosi",
+  "aaa_operatori_turistici": "Operatori turistici",
+  "formSend": "Invia richiesta",
+  "formSandingTitle": "Sto inviando il messaggio...",
+  "formSuccessTitle": "Messaggio inviato con successo",
+  "formSuccessText": "Abbiamo ricevuto il tuo messaggio e sarai contattato al più presto.",
+  "formErrorTitle": "Si è verificato un errore",
+  "formErrorText": "Non è stato possibile inviare il tuo messaggio.",
+  "formTitlePrivacyPolicy": "Informativa privacy",
+
+  "newsletter": {
+    "title:": "Newsletter",
+    "accept": "Inserendo il tuo indirizzo email, acconsenti a ricevere comunicazioni e aggiornamenti da parte nostra. I tuoi dati saranno trattati in conformità con la nostra",
+    "policy": "Informativa sulla privacy",
+    "authorize": "e non verranno ceduti a terzi. Potrai cancellarti in qualsiasi momento cliccando sul link di disiscrizione presente in ogni email.",
+    "subscribe": "Iscriviti"
+  },
+
+  "preferencePolicy": "Modifica preferenze privacy",
+  "cookiePolicyId": "",
+
+  "skipContent": "Vai al contenuto principale",
+  "skipFooter": "Vai al footer",
+
+  "splide": {
+    "homeTitle": "Elementi in evidenza",
+    "hypervisionsTitle": "Contenuti ipervisione",
+    "CarosulTitle": "Galleria immagini ",
+    "play": "Avvia scorrimento automatico",
+    "pause": "Interrompi scorrimento automatico",
+    "slideX": "Vai all'elemento ",
+    "slideLabel": "di"
+  },
+  "backTop": "Torna al menu",
+  "googleMaps": "Google Maps",
+  "read": "leggi"
+}

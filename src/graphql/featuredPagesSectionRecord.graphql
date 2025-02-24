@@ -1,0 +1,26 @@
+fragment featuredPagesSectionRecord on FeaturedPagesSectionRecord {
+  _modelApiKey
+  id
+  featuredPagesHeader
+  featuredPagesSubheader
+  featuredPages {
+    _modelApiKey
+    _publishedAt
+    slug
+    id
+    slugs: _allSlugLocales {
+      locale
+      value
+    }
+    abstract
+    title: label
+    previewImage {
+      responsiveImage(
+        sizes: "(min-width:768px) 50vw, (min-width:1024px) 33vw, 100vw, 500px"
+        imgixParams: { auto: [format, compress], fit: crop, ar: "3:2" }
+      ) {
+        ...rImage
+      }
+    }
+  }
+}

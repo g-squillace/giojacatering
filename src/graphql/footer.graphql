@@ -1,0 +1,50 @@
+query Footer($locale: SiteLocale, $fallbackLocale: [SiteLocale!]) {
+  layout(locale: $locale, fallbackLocales: $fallbackLocale) {
+    footerSubtitle
+    address
+    colorReverseBanner
+    email
+    facebookPixelId
+    footerSubtitle
+    googleAnalyticsId
+    googleTagManagerId
+    id
+    iubendaPolicyId
+    iubendaSiteId
+    iva
+    phone
+    rea
+    titleNewsletter
+    textNewsletter
+    urlNewsletter
+    googleMaps
+    footerLogo {
+      url
+      height
+      width
+    }
+    socialMediaLinks {
+      url
+      name
+      id
+      icon {
+        url
+        height
+        width
+      }
+    }
+    footerMenu {
+      id
+      label
+      page {
+        label
+        slug
+        slugs: _allSlugLocales {
+          locale
+          value
+        }
+        _modelApiKey
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+import fetchDato from "@/lib/fetchDato";
+import { draftMode } from "next/headers";
+import { ProductDocument, SiteLocale } from "@/graphql/generated";
+import { notFound } from "next/navigation";
+import GenericPage from "@/components/Templates/GenericPage";
+import getSeoMeta from "@/lib/seoUtils";
+import config from "@/data/config";
+import { pickHrefs } from "@/lib/pickPageData";
+import { hrefsProp } from "@/_types";
+import Wrapper from "@/components/Layout/Wrapper";
+
+const locale = "it";
+const siteLocale = locale as SiteLocale;
+const defaultLocale = config.defaultLocale as SiteLocale;
+const pageSlug = "##";
+
+export async function generateMetadata() {
+  const data = await fetchDato(
+    ProductDocument,
+    {
+      locale: siteLocale,
+      fallbackLocale: [defaultLocale],
+      slug: pageSlug,
+    },
+    false
+  );
+  const page: any = data?.product || null;
+  const meta = getSeoMeta(page, locale);
+  return meta;
+}
+
+export default async function Page() {
+  const { isEnabled } = draftMode();
+  const data = await fetchDato(
+    ProductDocument,
+    {
+      locale: siteLocale,
+      fallbackLocale: [defaultLocale],
+      slug: pageSlug,
+    },
+    isEnabled
+  );
+  if (!data?.product) {
+    notFound();
+  }
+  const hrefs: hrefsProp = pickHrefs(data.product);
+
+  return (
+    <Wrapper hrefs={hrefs} locale={locale}>
+      {JSON.stringify(data.product)}
+      {/* <GenericPage data={data} page={data.page} locale={siteLocale} />{" "} */}
+    </Wrapper>
+  );
+}

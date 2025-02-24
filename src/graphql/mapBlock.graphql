@@ -1,0 +1,13 @@
+fragment mapBlockRecord on MapBlockRecord {
+  id
+  __typename
+  _modelApiKey
+  titleMap
+  textMap
+  map {
+    latitude
+    longitude
+  }
+  tokenMap
+  urlStyleMapbox
+}

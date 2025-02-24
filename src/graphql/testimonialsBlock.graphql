@@ -1,0 +1,15 @@
+fragment testimonialsBlockRecord on TestimonialsBlockRecord {
+  id
+  _modelApiKey
+  __typename
+  titleTestimonialsBlock
+  textTestimonialsBlock
+  testimonials {
+    id
+    _modelApiKey
+    __typename
+    textQuote
+    whoQuote
+    roleQuote
+  }
+}
