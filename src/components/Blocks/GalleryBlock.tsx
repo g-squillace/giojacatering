@@ -33,10 +33,13 @@ export default function GalleryBlock({
   data: any;
   locale: string;
 }) {
-  const classButton = "bg-accent";
+  const classButton = "bg-secondary";
+
+  const nextEl = `#nextButton-${data.id}`;
+  const prevEl = `#prevButton-${data.id}`;
   return (
     <div className="overflow-hidden max-w-[100vw]">
-      <div className="container relative gallery">
+      <div className="relative gallery">
         <motion.div
           initial="offscreen"
           whileInView="onscreen"
@@ -50,12 +53,16 @@ export default function GalleryBlock({
                 modules={[A11y, Autoplay, Navigation]}
                 slidesPerView={"auto"}
                 spaceBetween={30}
-                autoplay={true}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: true,
+                }}
+                loop={true}
                 speed={1000}
                 className="slider-auto-width"
                 navigation={{
-                  nextEl: "#nextButton",
-                  prevEl: "#prevButton",
+                  nextEl: nextEl,
+                  prevEl: prevEl,
                 }}
                 a11y={{
                   firstSlideMessage: translate("firstSlideMessage", locale),
@@ -77,7 +84,7 @@ export default function GalleryBlock({
                     </SwiperSlide>
                   ))}
               </Swiper>
-              <ButtonsSwiper classButton={classButton} />
+              <ButtonsSwiper classButton={classButton} containerId={data.id} />
             </>
           ) : (
             <>
@@ -86,14 +93,15 @@ export default function GalleryBlock({
                 spaceBetween={30}
                 autoplay={{
                   delay: 2500,
-                  disableOnInteraction: false,
+                  disableOnInteraction: true,
                 }}
                 keyboard={true}
                 modules={[A11y, Autoplay, Navigation]}
                 navigation={{
-                  nextEl: "#nextButton",
-                  prevEl: "#prevButton",
+                  nextEl: nextEl,
+                  prevEl: prevEl,
                 }}
+                loop={true}
                 a11y={{
                   firstSlideMessage: translate("firstSlideMessage", locale),
                   lastSlideMessage: translate("This is the last slide", locale),
@@ -124,7 +132,7 @@ export default function GalleryBlock({
                   );
                 })}
               </Swiper>
-              <ButtonsSwiper classButton={classButton} />
+              <ButtonsSwiper classButton={classButton} containerId={data.id} />
             </>
           )}
         </motion.div>

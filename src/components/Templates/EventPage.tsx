@@ -13,9 +13,17 @@ type Props = {
 };
 
 const EventPage = ({ data, locale }: Props) => {
-  const { tags, title, abstract, eventImage, dateEndEvent, dateStartEvent } =
-    data.event;
+  const {
+    tags,
+    date,
+    title,
+    abstract,
+    eventImage,
+    dateEndEvent,
+    dateStartEvent,
+  } = data.event;
   if (!data.event) notFound();
+  return;
   return (
     <section className="">
       <div className="">
@@ -46,7 +54,6 @@ const EventPage = ({ data, locale }: Props) => {
           )}
           <div className="flex items-center gap-3 text-sm px-2">
             <CustomIcon classes="h-5 w-5 bg-accent" fileName="calendar" />
-            {getDate(dateStartEvent, dateEndEvent, locale)}
           </div>
           <div className="aspect-square mt-8 xl:col-start-2 xl:col-span-10 relative md:aspect-[2/1] md:mt-20">
             <SRCImage

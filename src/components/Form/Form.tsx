@@ -15,9 +15,9 @@ type PropsContactForm = {
 
 const ContactForm = ({ locale }: PropsContactForm) => {
   const formWebhook = process.env.NEXT_PUBLIC_FORM;
-  const labelClass = "text-sm block mb-1.5 font-bold";
+  const labelClass = "xl:text-sm block mb-1.5 uppercase text-xs tracking-wider";
   const inputClass =
-    "w-full px-2 md:px-4 placeholder:text-gray-dark text-black bg-white placeholder:text-sm py-3 border border-primary-content rounded-md";
+    "w-full px-2 md:px-4 placeholder:text-gray-dark text-black bg-white placeholder:text-sm py-3 border border-black/5";
   const checkboxClass =
     "h-4 w-4 shrink-0 rounded-full bg-white text-black accent-black";
 
@@ -68,8 +68,15 @@ const ContactForm = ({ locale }: PropsContactForm) => {
       whileInView="onscreen"
       viewport={{ once: true, amount: 0.1 }}
       variants={variants}
+      className="z-10 relative"
     >
-      <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="mt-12 p-6 xl:px-12 xl:w-10/12 py-10 shadow-xl border border-black/5 bg-white"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="title-small mb-6">
+          Compila il form ed inviaci un messaggio
+        </div>
         <div aria-hidden="true" className="hidden">
           <label htmlFor="antiSpam">AntiSpam</label>
           <input

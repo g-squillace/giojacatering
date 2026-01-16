@@ -4,6 +4,7 @@ fragment slideshowRecord on SlideshowRecord {
   slides {
     id
     title
+    year
     text
     image {
       responsiveImage(

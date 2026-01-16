@@ -79,7 +79,14 @@ export default function Sections({
       }
       case "brand_section": {
         const brandSectionRecord = b as BrandSectionRecord;
-        content = <Brands brandShowcase={brandSectionRecord.brands} />;
+        content = (
+          <Brands
+            brandShowcase={brandSectionRecord.brands}
+            title={brandSectionRecord.titleBrand}
+            text={brandSectionRecord.textBrand}
+            locale={locale}
+          />
+        );
         break;
       }
       case "contact_text_block": {
@@ -211,7 +218,7 @@ export default function Sections({
     }
 
     return (
-      <div key={b.id} className="">
+      <div key={b.id} className="standard-vertical-m relative z-10">
         {content}
       </div>
     );

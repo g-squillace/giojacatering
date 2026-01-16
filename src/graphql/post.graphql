@@ -6,7 +6,7 @@ query Post($slug: String, $locale: SiteLocale, $fallbackLocale: [SiteLocale!]) {
   ) {
     _publishedAt
     _modelApiKey
-    date: _createdAt
+    date
     title
     abstract
     blogImage {

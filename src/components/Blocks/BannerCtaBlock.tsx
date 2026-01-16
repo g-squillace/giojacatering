@@ -64,19 +64,19 @@ export default function BanneCtaBlock({ data, locale }) {
       <div
         className={`${
           displayOptions === "text-right" ? "lg:flex-row-reverse" : ""
-        } h-full lg:flex xl:items-stretch`}
+        } h-full lg:flex space-y-10 xl:items-stretch`}
       >
         <motion.div
           initial="offscreen"
           whileInView="onscreen"
           variants={textVariants}
-          viewport={{ once: true, amount: 0.75 }}
+          viewport={{ once: true }}
           className="lg:w-1/2 grid gap-6"
         >
-          <div className="grid gap-6 content-center">
+          <div className="grid gap-6 content-center lg:px-16">
             {label && <div className="prefix">{label}</div>}
-            <h2 className="title">{title}</h2>
-            <div className="text">
+            <h2 className="title-small">{title}</h2>
+            <div className="text-base-100 mx-auto">
               <CustomStructuredText record={text} locale={locale} />
             </div>
             {link && (
@@ -91,12 +91,12 @@ export default function BanneCtaBlock({ data, locale }) {
             initial="offscreen"
             whileInView="onscreen"
             variants={imageVariants}
-            viewport={{ once: true, amount: 0.75 }}
-            className="lg:w-1/2 flex items-center justify-center"
+            viewport={{ once: true }}
+            className="lg:w-2/3 flex items-center justify-center overflow-hidden"
           >
             <SRCImage
               data={bannerCtaImage.responsiveImage}
-              className="mx-auto xl:mx-0 xl:!w-full"
+              className="mx-auto xl:mx-0 xl:!w-full group-hover:scale-105 transition-all duration-700"
             />
           </motion.div>
         )}
@@ -106,26 +106,28 @@ export default function BanneCtaBlock({ data, locale }) {
 
   function RenderContentBanner({ title, label, text, coverImage }) {
     return (
-      <div>
-        <div className="relative z-10 py-20 overflow-hidden">
-          <span className="absolute inset-0 -z-10 bg-black/80"></span>
-          {coverImage && (
-            <SRCImage
-              data={coverImage.responsiveImage}
-              className="object-cover w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            />
-          )}
-          <div className="container relative z-20">
-            <div className="mx-auto max-w-screen-sm text-center grid gap-6">
-              {label && <div className="prefix mx-auto">{label}</div>}
-              <h2 className="title">{title}</h2>
-              {text && <CustomStructuredText record={text} locale={locale} />}
-              {data.link && (
-                <div className="inline-block">
-                  <ButtonBlock label={"Vai"} />
-                </div>
-              )}
-            </div>
+      <div className="relative z-10 py-28 overflow-hidden -my-20 xl:-my-32">
+        <span className="absolute inset-0 -z-10 bg-secondary text-secondary-content" />
+        {coverImage && (
+          <SRCImage
+            data={coverImage.responsiveImage}
+            className="object-cover w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        )}
+        <div className="container relative z-20">
+          <div className="mx-auto max-w-screen-md xl:max-w-screen-lg text-center space-y-6 lg:space-y-10">
+            {label && (
+              <div className="prefix mx-auto text-secondary-content">
+                {label}
+              </div>
+            )}
+            <h2 className="title text-secondary-content mx-auto">{title}</h2>
+            {text && <CustomStructuredText record={text} locale={locale} />}
+            {data.link && (
+              <div className="inline-block">
+                <ButtonBlock label={"Scrivici"} />
+              </div>
+            )}
           </div>
         </div>
       </div>

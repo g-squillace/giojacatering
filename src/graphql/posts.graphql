@@ -13,9 +13,17 @@ query Posts($locale: SiteLocale, $skip: IntType) {
     }
     slug
     id
+    date
     title
     tags {
+      id
       tag
+      slug
+      _modelApiKey
+      slugs: _allTagLocales {
+        locale
+        value
+      }
     }
     seoTags {
       description
@@ -38,7 +46,7 @@ query Posts($locale: SiteLocale, $skip: IntType) {
     blogImage {
       responsiveImage(
         sizes: "(min-width:768px) 50vw, (min-width:1024px) 33vw, 100vw, 500px"
-        imgixParams: { auto: [format, compress], fit: crop, ar: "7:8" }
+        imgixParams: { auto: [format, compress], fit: crop, ar: "2:1" }
       ) {
         ...rImage
       }

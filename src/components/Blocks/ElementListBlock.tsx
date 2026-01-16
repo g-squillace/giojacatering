@@ -68,7 +68,7 @@ const ElementListBlock = ({
           </InternalLink>
         )}
       </motion.div>
-      <div className="md:grid-cols-2 lg:grid-cols-3 grid gap-6">
+      <div className="md:grid-cols-2 lg:grid-cols-3 grid gap-6 xl:w-10/12 mx-auto">
         {results.flat().map((item, i: number) =>
           item._modelApiKey === "event" ? (
             <motion.div

@@ -1,9 +1,14 @@
 import fetchDato from "@/lib/fetchDato";
 import { draftMode } from "next/headers";
-import { PageDocument, EventsDocument, SiteLocale } from "@/graphql/generated";
+import {
+  PageDocument,
+  SiteLocale,
+  PostsDocument,
+  TagRecord,
+} from "@/graphql/generated";
 import { notFound } from "next/navigation";
-import EventIndexPage from "@/components/Templates/EventsIndexPage";
 import getSeoMeta from "@/lib/seoUtils";
+import PostsIndexPage from "@/components/Templates/PostsIndexPage";
 import { pickHrefs } from "@/lib/pickPageData";
 import { hrefsProp } from "@/_types";
 import Wrapper from "@/components/Layout/Wrapper";
@@ -37,33 +42,33 @@ export default async function Page() {
   );
 
   let list = [];
-  let allEvents = [];
+  let allPosts = [];
   let exitCondition = true;
   let page = 0;
   while (exitCondition) {
     const results = await fetchDato(
-      EventsDocument,
+      PostsDocument,
       {
         locale: siteLocale,
         skip: page * 100,
       },
       isEnabled
     );
-    if (results?.allEvents?.length > 0) {
-      allEvents = [...allEvents, ...results.allEvents];
+    if (results?.allPosts?.length > 0) {
+      allPosts = [...allPosts, ...results.allPosts];
       page++;
     } else {
       exitCondition = false;
     }
   }
-  list = allEvents;
+  list = allPosts;
 
   if (!data) notFound();
 
   const hrefs: hrefsProp = pickHrefs(data.page);
   return (
     <Wrapper hrefs={hrefs} locale={locale}>
-      <EventIndexPage data={data} list={list} locale={siteLocale} />
+      <PostsIndexPage data={data} list={list} locale={siteLocale} />
     </Wrapper>
   );
 }

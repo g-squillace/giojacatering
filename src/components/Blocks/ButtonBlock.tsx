@@ -12,10 +12,10 @@ export default function ButtonBlock({
   color = "light",
 }: ButtonProps) {
   const buttonClass =
-    "inline-flex items-center justify-center rounded-md px-7 py-3 text-center motion-safe:transition";
+    "inline-flex uppercase text-xs before:h-px before:bg-primary-content before:w-6 tracking-widest items-center justify-center text-center motion-safe:transition gap-2 before:duration-500 before:ease-in-out group-hover:before:w-8 group-hover:gap-1 before:duration-500";
   const colorButton =
     color === "light"
-      ? "bg-accent text-accent-content"
+      ? "text-primary-content"
       : "bg-primary text-primary-content";
   const classArrow = "size-6 ml-2";
 

@@ -12,7 +12,6 @@ type PropsCardPost = {
 };
 
 const CardPageBlock = ({ data, locale, i }: PropsCardPost) => {
-  console.log("data", data);
   const { previewImage, label, abstract } = data;
   // const titleClass = "title-small";
   const titleClass = "text-white text-2xl font-serif";

@@ -7,7 +7,7 @@ type RouteProps = {
     {
       locale: string;
       value: string;
-    }
+    },
   ];
   modelRelated: string | null;
 };
@@ -27,7 +27,7 @@ function matchCustomRoute({ slugs, _modelApiKey, locale }: RouteProps) {
       !i.routeInfo.isDynamic &&
       !i.routeInfo.isHome &&
       i.routeInfo.model === _modelApiKey &&
-      i.slugs?.[locale] === slug
+      i.slugs?.[locale] === slug,
   );
 
   if (!matchingRoute) return null;
@@ -66,11 +66,8 @@ export default function resolveLink({
         return `${lang}/${slug}`;
       }
     case "event":
-      return `${lang}/${t(`eventi`, locale)}/${slug}`;
-    case "product":
-      return `${lang}/${t(`prodotti`, locale)}/${slug}`;
     case "post":
-      return `${lang}/${t(`articoli`, locale)}/${slug}`;
+      return `${lang}/${t(`eventi`, locale)}/${slug}`;
     case "tag":
       switch (modelRelated) {
         case "posts":

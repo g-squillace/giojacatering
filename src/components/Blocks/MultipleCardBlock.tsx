@@ -61,7 +61,7 @@ export default function GalleryBlock({ data, locale }) {
                 <div className="relative aspect-[2/3] w-full bg-accent">
                   <motion.div
                     variants={imageVariants}
-                    viewport={{ root: scrollRef, once: true, amount: 0.75 }}
+                    viewport={{ root: scrollRef, once: true, amount: 0 }}
                     className={`absolute top-0 overflow-hidden w-full`}
                   >
                     <SRCImage

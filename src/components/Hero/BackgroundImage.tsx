@@ -6,6 +6,7 @@ import {
 import { Maybe } from "graphql/jsutils/Maybe";
 import { SRCImage } from "react-datocms";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import DynamicLink from "@/components/Links/DynamicLink";
 import ButtonBlock from "@/components/Blocks/ButtonBlock";
 
@@ -36,23 +37,30 @@ const BackgroundImageHero = ({
         className="object-cover object-center absolute inset-0 !w-full !h-full !max-w-none"
         priority={true}
       />
-      <div className="relative z-0 flex items-center h-full mt-[72px] md:mt-[104px]">
+      <div className="bg-primary-content/80 absolute inset-0" />
+      <div className="relative z-0 flex items-center h-full">
         <div className="container">
           <div className="flex flex-wrap justify-center">
-            <div className="w-full px-4">
-              <div className="grid gap-6 mx-auto lg:mx-0 max-w-[570px] lg:p-12 lg:py-16 text-center md:text-left bg-primary/80 p-8 text-base-100 xl:pb-20">
-                {heroTitle && <h1 className="title">{heroTitle}</h1>}
+            <div className="w-full px-4 lg:pt-36">
+              <div className="text-white font-serif grid gap-6 mx-auto max-w-[900px] lg:py-12 text-center py-8">
+                {heroTitle && (
+                  <h1 className="text-2xl md:text-4xl font-serif italic">
+                    {heroTitle}
+                  </h1>
+                )}
                 {heroSubtitle && (
                   <h2
                     dangerouslySetInnerHTML={{ __html: heroSubtitle }}
                     className=""
                   />
                 )}
-                {link && (
-                  <DynamicLink className={`group`} link={link} locale={locale}>
-                    <ButtonBlock label={link.label} />
-                  </DynamicLink>
-                )}
+                <Image
+                  src="/assets/verticalLogo.svg"
+                  alt="Gioja Catering"
+                  width={200}
+                  height={200}
+                  className="mx-auto w-36 mt-12 lg:w-44"
+                />
               </div>
             </div>
           </div>

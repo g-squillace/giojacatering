@@ -17,7 +17,7 @@ export default function Template({
     <>
       <div
         id="transition-element"
-        className="w-screen h-[100vh] bg-secondary z-[100] fixed top-0 left-0 text-white font-bold text-6xl flex justify-center items-center"
+        className="w-screen h-[100vh] bg-white z-[100] fixed top-0 left-0 text-white font-bold text-6xl flex justify-center items-center"
       >
         <Image src={logo.url} width="200" height="200" alt={logo.url} />
       </div>

@@ -7,7 +7,12 @@ import fetchDato from "@/lib/fetchDato";
 import resolveLink from "@/lib/resolveLink";
 import Template from "./Template";
 
-export default async function Wrapper({ hrefs, locale, children }: any) {
+export default async function Wrapper({
+  hrefs,
+  locale,
+  children,
+  layout,
+}: any) {
   const siteLocale = locale as SiteLocale;
   const defaultLocale = config.defaultLocale as SiteLocale;
   const { isEnabled } = draftMode();
@@ -22,8 +27,13 @@ export default async function Wrapper({ hrefs, locale, children }: any) {
 
   return (
     <>
-      <HeaderRenderer hrefs={hrefs} data={menuData} locale={siteLocale} />
-      <Template logo={menuData.layout.logoAlt}>{children}</Template>
+      <HeaderRenderer
+        layout={layout}
+        hrefs={hrefs}
+        data={menuData}
+        locale={siteLocale}
+      />
+      <Template logo={menuData.layout.logoDark}>{children}</Template>
     </>
   );
 }

@@ -18,9 +18,9 @@ const LanguageSelector = ({ lng, hrefs }: Props) => {
           return (
             <div key={locale}>
               <Link href={url} className="" role="menuitem">
-                <div className="uppercase">
-                  {/* {translate("locale", locale).substring(0, 3)} */}
-                  {translate("locale", locale)}
+                <div className="uppercase text-sm border px-6 py-2 border-white/80 text-white font-semibold tracking-widest">
+                  {translate("locale", locale).substring(0, 3)}
+                  {/* {translate("locale", locale)} */}
                 </div>
               </Link>
             </div>

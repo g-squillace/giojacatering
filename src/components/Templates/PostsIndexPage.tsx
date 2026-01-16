@@ -28,6 +28,7 @@ export default function PostsIndexPage({
       {page?.page?.hero && (
         <WhichHero hero={page?.page?.hero as any} locale={locale} />
       )}
+      <PostGridRenderer data={list as PostRecord[]} lng={locale} />
       {page?.page?.sections?.map((section: SectionWrapRecord) => {
         return (
           <section
@@ -46,7 +47,6 @@ export default function PostsIndexPage({
           </section>
         );
       })}
-      <PostGridRenderer data={list as PostRecord[]} lng={locale} />
     </div>
   );
 }

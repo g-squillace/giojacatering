@@ -35,9 +35,11 @@ export default function TextBlock({ data, locale, bg }: Props) {
   };
 
   const classPrefix = displayOptions.includes("center")
-    ? "mx-auto prefix"
+    ? "mx-auto prefix xl:max-w-[650px]"
     : "prefix";
-  const classTitle = "title max-w-screen-md";
+  const classTitle = displayOptions.includes("center")
+    ? "title max-w-screen-md mx-auto"
+    : "title max-w-screen-md";
 
   return (
     <div className={`text-${displayOptions}`}>
@@ -52,34 +54,38 @@ export default function TextBlock({ data, locale, bg }: Props) {
               ? "justify-center"
               : displayOptions.includes("right")
               ? "justify-end"
-              : ""
-          } grid gap-6`}
+              : "lg:flex lg:gap-12 xl:w-10/12 lg:mx-auto"
+          } space-y-6 xl:space-y-10`}
         >
-          {labelTextBlock && (
-            <div className={classPrefix}>{labelTextBlock}</div>
-          )}
-          <h2
-            className={classTitle}
-            dangerouslySetInnerHTML={{ __html: titleTextBlock }}
-          />
-          {textTextBlock && (
-            <div
-              className={`max-w-prose ${
-                displayOptions.includes("center") ? "mx-auto" : ""
-              }`}
-            >
-              <StructuredContent data={textTextBlock} locale={locale} />
-            </div>
-          )}
-          {linkTextBlock && (
-            <DynamicLink
-              link={linkTextBlock}
-              locale={locale}
-              className={`block group`}
-            >
-              <ButtonBlock label={linkTextBlock.label} />
-            </DynamicLink>
-          )}
+          <div className="space-y-6 xl:space-y-10">
+            {labelTextBlock && (
+              <div className={classPrefix}>{labelTextBlock}</div>
+            )}
+            <h2
+              className={classTitle}
+              dangerouslySetInnerHTML={{ __html: titleTextBlock }}
+            />
+          </div>
+          <div className="space-y-6 xl:space-y-10">
+            {textTextBlock && (
+              <div
+                className={`max-w-prose xl:text-md text-base-100 ${
+                  displayOptions.includes("center") ? "mx-auto" : "lg:pt-9"
+                }`}
+              >
+                <StructuredContent data={textTextBlock} locale={locale} />
+              </div>
+            )}
+            {linkTextBlock && (
+              <DynamicLink
+                link={linkTextBlock}
+                locale={locale}
+                className={`block group`}
+              >
+                <ButtonBlock label={linkTextBlock.label} />
+              </DynamicLink>
+            )}
+          </div>
         </motion.div>
       </div>
     </div>

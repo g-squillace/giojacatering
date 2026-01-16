@@ -24,21 +24,29 @@ const RightImageHero = ({
 }: Props) => {
   return (
     <motion.div
-      // initial={{ height: "100vh" }}
-      // animate={{ height: "90vh" }}
       transition={{ duration: 0.75, delay: 0.5 }}
-      className="w-full mt-[72px] relative object-cover object-bottom"
+      className="w-full relative object-cover object-bottom"
     >
-      <div className="relative bg-secondary text-secondary-content py-[120px]">
+      <div className="relative pt-[120px]">
         <div className="container">
-          <div className="lg:flex items-center">
-            <div className="w-full lg:w-5/12">
-              <div className="mb-14 lg:mb-0 grid gap-6">
-                {heroTitle && <h1 className="title">{heroTitle}</h1>}
+          <div className="space-y-12 lg:pt-12">
+            <div className="w-full h-80 px-4 relative mx-auto">
+              {image && image.responsiveImage && (
+                <SRCImage
+                  className="absolute !w-full !h-full object-cover inset-0 !max-w-none"
+                  data={image.responsiveImage}
+                />
+              )}
+            </div>
+            <div className="w-full lg:w-5/12 mx-auto">
+              <div className="mb-14 lg:mb-0 grid gap-6 text-center">
+                {heroTitle && (
+                  <h1 className="title xl:text-5xl">{heroTitle}</h1>
+                )}
                 {heroSubtitle && (
                   <div
                     dangerouslySetInnerHTML={{ __html: heroSubtitle }}
-                    className="text"
+                    className="text xl:text-md"
                   />
                 )}
                 {link && (
@@ -47,14 +55,6 @@ const RightImageHero = ({
                   </DynamicLink>
                 )}
               </div>
-            </div>
-            <div className="w-full h-80 px-4 lg:w-7/12 relative">
-              {image && image.responsiveImage && (
-                <SRCImage
-                  className="absolute !w-full !h-full object-cover inset-0"
-                  data={image.responsiveImage}
-                />
-              )}
             </div>
           </div>
         </div>

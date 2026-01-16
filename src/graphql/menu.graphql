@@ -8,6 +8,10 @@ query Menu($locale: SiteLocale, $fallbackLocale: [SiteLocale!]) {
       url
       alt
     }
+    logoDark {
+      url
+      alt
+    }
     menu {
       ... on MenuItemRecord {
         id

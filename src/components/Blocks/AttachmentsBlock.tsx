@@ -62,7 +62,7 @@ const AttachmentsBlock = ({ data, style, locale }: PropsAttachmentsBlock) => {
                   locale={locale}
                   className="group cursor-pointer"
                 >
-                  <div className="bg-base-100 text-base-content flex items-center gap-4 rounded-md p-3">
+                  <div className="bg-white text-base-content flex items-center gap-4 rounded-md p-3">
                     <CustomIcon
                       classes="bg-base-content size-6"
                       fileName="download"

@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 @layer base {
   html {
-    /* @apply font-sans !scroll-smooth; */
+    @apply font-sans !scroll-smooth;
   }
   @media (prefers-reduced-motion) {
     html {
@@ -10,7 +10,7 @@
     }
   }
   body {
-    /* @apply bg-base-100 text-base-content; */
+    @apply bg-primary text-primary-content;
   }
 }
 
@@ -20,13 +20,13 @@
 
 @layer utilities {
   .standard-vertical-m {
-    @apply my-12 md:my-20 xl:my-32;
+    @apply my-20 xl:my-32;
   }
   .standard-vertical-p {
-    @apply py-12 md:py-20 xl:py-32;
+    @apply py-20 xl:py-32;
   }
   .standard-vertical-gap {
-    @apply grid gap-12 md:gap-20 xl:gap-32;
+    @apply grid gap-20 xl:gap-32;
   }
   .unwrapped {
     @apply ml-[calc(-50vw+50%)] mr-[calc(-50vw+50%)];
@@ -37,13 +37,13 @@
   /* Typography ----------------------------------- */
 
   .title {
-    @apply text-xl xl:text-5xl font-bold font-serif max-w-prose;
+    @apply text-2xl xl:text-4xl max-w-prose font-serif italic;
   }
   .title-small {
-    @apply text-xl font-bold font-serif max-w-prose;
+    @apply text-xl xl:text-3xl max-w-prose font-serif italic;
   }
   .prefix {
-    @apply text-sm uppercase font-bold inline-block max-w-prose;
+    @apply text-xs xl:text-sm uppercase text-base-100 tracking-widest inline-block max-w-prose;
   }
   .text {
     @apply max-w-prose;
@@ -80,7 +80,7 @@
   }
 
   .formatted ol li:after {
-    @apply absolute top-[2px] -left-4 h-[7px] w-[7px] text-inherit font-bold xl:text-base text-accent;
+    @apply absolute top-[2px] -left-4 h-[7px] w-[7px] text-inherit font-bold xl:text-base;
     content: counter(my-awesome-counter) ". ";
   }
   /* .formatted ol li:after {
@@ -114,4 +114,14 @@
   .custom-arrow svg {
     @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[0.5];
   }
+}
+
+.swiper-pagination {
+  @apply !relative mt-12;
+}
+.swiper-pagination .swiper-pagination-bullet {
+  @apply bg-transparent border border-base-100 size-3 opacity-100;
+}
+.swiper-pagination .swiper-pagination-bullet-active {
+  @apply bg-base-100;
 }

@@ -16,27 +16,30 @@ import translate from "@/labels";
 import ButtonsSwiper from "../Blocks/Swiper/ButtonsSwiper";
 
 export default function Carousel({
-  slides,
+  hero,
   locale,
 }: {
-  slides: any;
+  hero: any;
   locale: SiteLocale;
 }) {
   const classButton = "bg-accent";
+  const nextEl = `#nextButton-${hero.id}`;
+  const prevEl = `#prevButton-${hero.id}`;
   return (
     <header className={`relative hero-carousel mt-[72px] md:mt-[104px]`}>
       <Swiper
         speed={1000}
         autoplay={{
           delay: 3000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         pagination={{
           clickable: true,
         }}
+        loop={true}
         navigation={{
-          nextEl: "#nextButton",
-          prevEl: "#prevButton",
+          nextEl: nextEl,
+          prevEl: prevEl,
         }}
         modules={[Autoplay, Pagination, Navigation, A11y, Parallax]}
         a11y={{
@@ -48,7 +51,7 @@ export default function Carousel({
             translate("Go to slide", locale) + "{{index}}",
         }}
       >
-        {slides.map((slide: any, i: number) => {
+        {hero.sliders.map((slide: any, i: number) => {
           const { image, title, text, link } = slide;
 
           return (
@@ -82,7 +85,7 @@ export default function Carousel({
           );
         })}
       </Swiper>
-      <ButtonsSwiper classButton={classButton} />
+      <ButtonsSwiper classButton={classButton} containerId={hero.id} />
     </header>
   );
 }

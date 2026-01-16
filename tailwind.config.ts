@@ -1,12 +1,4 @@
 import type { Config } from "tailwindcss";
-// import colorsTheme from "./src/data/colorsTheme.json";
-// import daisyui from "daisyui";
-
-// let themes: any = [
-//   {
-//     custom: colorsTheme,
-//   },
-// ];
 
 const config: Config = {
   content: [
@@ -14,24 +6,21 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  // daisyui: {
-  //   themes,
-  // },
   theme: {
     extend: {
       colors: {
-        primary: "#000000",
-        "primary-content": "#FFFFFF",
-        secondary: "#dcdcf4",
-        "secondary-content": "#000000",
+        primary: "#FFFFFF",
+        "primary-content": "#3E3930",
+        secondary: "#F4F4F1",
+        "secondary-content": "#3E3930",
         accent: "#5452EB",
         "accent-content": "#f1f1f1",
-        neutral: "#3F3F3F",
-        "neutral-content": "#FFFFFF",
-        "base-100": "#ffffff",
-        "base-200": "#DDDDDD",
-        "base-300": "#8C8C8C",
-        "base-content": "#181B1D",
+        neutral: "#F4F5F2",
+        "neutral-content": "#3E3930",
+        "base-100": "#9E9A94",
+        "base-200": "#776F60",
+        "base-300": "#696359",
+        "base-content": "#3E3930",
         info: "#0057FF",
         "info-content": "#181B1D",
         success: "#00A96E",
@@ -49,8 +38,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        serif: ["var(--sectra-font)"],
+        sans: ["Montserrat", "sans-serif"],
+        serif: ["Cormorant Garamond", "serif"],
       },
       fontSize: {
         xs: ["12px", "14px"],
@@ -62,12 +51,12 @@ const config: Config = {
         "2xl": ["38px", "46px"],
         "3xl": ["50px", "60px"],
         "4xl": ["67px", "75px"],
+        "5xl": ["80px", "90px"],
       },
       screens: {
         "3xl": "1920px",
       },
     },
   },
-  // plugins: [daisyui],
 };
 export default config;

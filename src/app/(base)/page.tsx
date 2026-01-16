@@ -46,8 +46,8 @@ export default async function Page() {
   const hrefs: hrefsProp = pickHrefs(data.page);
 
   return (
-    <Wrapper hrefs={hrefs} locale={locale}>
-      <GenericPage data={data} page={data.page} locale={siteLocale} />{" "}
+    <Wrapper hrefs={hrefs} locale={locale} layout="dark">
+      <GenericPage data={data} page={data.page} locale={siteLocale} />
     </Wrapper>
   );
 }

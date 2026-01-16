@@ -241,7 +241,9 @@ function getPaths(routes: any, defaultLocale: string) {
     for (let route of sibiling) {
       let names = getSlugs(route, defaultLocale);
 
-      let defautSlug = names?.find((i: any) => i.locale === defaultLocale)?.value;
+      let defautSlug = names?.find(
+        (i: any) => i.locale === defaultLocale
+      )?.value;
 
       if (defautSlug === "home") {
         defautSlug = "";
