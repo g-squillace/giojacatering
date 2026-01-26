@@ -44,7 +44,7 @@ const BackgroundImageHero = ({
             <div className="w-full px-4 lg:pt-36">
               <div className="text-white font-serif grid gap-6 mx-auto max-w-[900px] lg:py-12 text-center py-8">
                 {heroTitle && (
-                  <h1 className="text-2xl md:text-4xl font-serif italic">
+                  <h1 className="text-2xl md:text-3xl 2xl:text-4xl font-serif italic">
                     {heroTitle}
                   </h1>
                 )}
