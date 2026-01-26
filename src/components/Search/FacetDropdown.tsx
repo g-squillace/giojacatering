@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { RefinementList, useCurrentRefinements } from "react-instantsearch";
+import { RefinementList, useCurrentRefinements, useClearRefinements } from "react-instantsearch";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import translate from "@/labels";
 
@@ -14,13 +14,17 @@ export function FacetDropdown({
   const buttonRef = useRef(null);
   const panelRef = useRef(null);
   const { items } = useCurrentRefinements();
+  const { refine: clearRefinement } = useClearRefinements({
+    includedAttributes: [attribute],
+  });
 
-  function getAttributeRefinements(attribute, items) {
+  function getAttributeRefinements(attribute: string, items: any[]) {
     const item = items.find((item) => item.attribute === attribute);
     return item?.refinements || [];
   }
 
   const refinements = getAttributeRefinements(attribute, items);
+  const hasRefinements = refinements.length > 0;
 
   const handleOutsideClick = (e) => {
     if (
@@ -70,6 +74,15 @@ export function FacetDropdown({
         }
         className=" border-x border-gray-200 w-full p-4 lg:bg-base-100 lg:border-base-300 lg:border-b lg:absolute z-30"
       >
+        <button
+          type="button"
+          onClick={() => clearRefinement()}
+          className={`mb-4 pb-2 border-b border-gray-200 w-full text-left cursor-pointer hover:font-bold ${
+            !hasRefinements ? "font-bold" : ""
+          }`}
+        >
+          All
+        </button>
         <RefinementList
           classNames={{
             root: "text-base",

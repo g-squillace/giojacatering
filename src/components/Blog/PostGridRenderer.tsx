@@ -30,7 +30,7 @@ const PostGridRenderer = ({ data, lng }: Props) => {
 
   // Filter posts
   const filteredPosts =
-    selectedTag === "Tutti"
+    selectedTag === "All"
       ? data
       : data.filter((post) =>
           post.tags.some((t: any) => t.tag === selectedTag),

@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import fetchDato from "@/lib/fetchDato";
 import myFont from "@/lib/loadCustomFont";
 import SkipLinks from "@/components/Layout/SkipLinks";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const locale = "it";
 const siteLocale = locale as SiteLocale;
@@ -68,6 +69,7 @@ export default async function RootLayout({
         <SkipLinks locale={locale} />
         <main id="content">{children}</main>
         <Footer data={footerData} locale={siteLocale} />
+        <WhatsAppButton />
       </body>
     </html>
   );
