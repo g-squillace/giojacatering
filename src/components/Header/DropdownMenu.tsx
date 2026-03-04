@@ -65,37 +65,40 @@ export default function DropdownMenu({
     }
     toggleOpen();
   };
-  const handleHideDropdown = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      if (dropdownOpen) {
-        toggleOpen();
-      }
-      if (isDropdownOpen) {
-        setIsDropdownOpen(false);
-      }
-    }
-  };
+  const wrapperRef = useRef(null);
 
-  function useClickOutside(ref: any) {
-    function handleClickOutside(event: { target: any }) {
-      if (ref.current && !ref.current.contains(event.target) && dropdownOpen) {
+  useEffect(() => {
+    const handleHideDropdown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        if (dropdownOpen) {
+          toggleOpen();
+        }
+        if (isDropdownOpen) {
+          setIsDropdownOpen(false);
+        }
+      }
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !(wrapperRef.current as HTMLElement).contains(event.target as Node) &&
+        dropdownOpen
+      ) {
         toggleOpen();
       }
       if (isDropdownOpen) {
         setIsDropdownOpen(!isDropdownOpen);
       }
-    }
-    useEffect(() => {
-      document.addEventListener("keydown", handleHideDropdown, true);
-      document.addEventListener("click", handleClickOutside);
-      return () => {
-        document.removeEventListener("keydown", handleHideDropdown, true);
-        document.removeEventListener("click", handleClickOutside);
-      };
-    }, [ref, dropdownOpen]);
-  }
-  const wrapperRef = useRef(null);
-  useClickOutside(wrapperRef);
+    };
+
+    document.addEventListener("keydown", handleHideDropdown, true);
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", handleHideDropdown, true);
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [dropdownOpen, isDropdownOpen, setIsDropdownOpen, toggleOpen]);
 
   return (
     <>

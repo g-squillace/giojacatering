@@ -3,7 +3,12 @@
     "allow": [
       "Bash(bun run dev)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(npx graphql-codegen:*)",
+      "Bash(npx next:*)"
     ]
   }
 }
