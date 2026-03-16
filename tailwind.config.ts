@@ -34,7 +34,7 @@ const config: Config = {
         center: true,
         padding: {
           DEFAULT: "1.5rem",
-          "2xl": "5rem",
+          "2xl": "clamp(5rem, 5.2vw, 8rem)",
         },
       },
       fontFamily: {
@@ -49,7 +49,7 @@ const config: Config = {
         lg: ["clamp(24px, 1.71vw, 36px)", "clamp(34px, 2.43vw, 51px)"],
         xl: ["clamp(28px, 2vw, 42px)", "clamp(40px, 2.86vw, 60px)"],
         "2xl": ["clamp(38px, 2.71vw, 57px)", "clamp(46px, 3.29vw, 69px)"],
-        "3xl": ["clamp(50px, 3.57vw, 75px)", "clamp(60px, 4.29vw, 90px)"],
+        "3xl": ["clamp(50px, 3.57vw, 65px)", "clamp(60px, 4.29vw, 90px)"],
         "4xl": ["clamp(67px, 4.79vw, 100px)", "clamp(75px, 5.36vw, 112px)"],
         "5xl": ["clamp(80px, 5.71vw, 120px)", "clamp(90px, 6.43vw, 135px)"],
       },

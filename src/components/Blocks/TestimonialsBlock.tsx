@@ -103,7 +103,7 @@ const TestimonialsBlock = ({ data, locale }: PropsTestimonialsBlock) => {
                 {textQuote && (
                   <h2
                     dangerouslySetInnerHTML={{ __html: textQuote }}
-                    className="title-small mx-auto xl:max-w-4xl"
+                    className="title-small mx-auto xl:max-w-3xl"
                   />
                 )}
                 {whoQuote && (

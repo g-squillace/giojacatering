@@ -2,7 +2,7 @@ import { SRCImage } from "react-datocms";
 import { motion, Variants } from "framer-motion";
 
 export default function ImageBlock({ data, locale }) {
-  const { imageAsset, imageDescription } = data;
+  const { imageAsset, imageDescription, tag } = data;
   const variants: Variants = {
     offscreen: {
       opacity: 0,
@@ -25,6 +25,9 @@ export default function ImageBlock({ data, locale }) {
       variants={variants}
       className="container"
     >
+      {tag && (
+        <div className="prefix mb-4 max-w-screen-md mx-auto">{tag.tag}</div>
+      )}
       <SRCImage
         data={imageAsset.responsiveImage}
         className="w-full h-auto !max-w-screen-md mx-auto"

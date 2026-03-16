@@ -20,16 +20,30 @@
 
 @layer utilities {
   .standard-vertical-m {
-    @apply my-20 xl:my-32;
+    @apply my-20;
   }
   .standard-vertical-p {
-    @apply py-20 xl:py-32;
+    @apply py-20;
   }
   .standard-vertical-gap {
-    @apply grid gap-20 xl:gap-32;
+    @apply grid gap-20;
   }
   .unwrapped {
     @apply ml-[calc(-50vw+50%)] mr-[calc(-50vw+50%)];
+  }
+}
+
+@screen xl {
+  .standard-vertical-m {
+    margin-top: clamp(128px, 9.14vw, 176px);
+    margin-bottom: clamp(128px, 9.14vw, 176px);
+  }
+  .standard-vertical-p {
+    padding-top: clamp(128px, 9.14vw, 176px);
+    padding-bottom: clamp(128px, 9.14vw, 176px);
+  }
+  .standard-vertical-gap {
+    gap: clamp(128px, 9.14vw, 176px);
   }
 }
 
@@ -40,7 +54,7 @@
     @apply text-2xl xl:text-4xl max-w-prose font-serif italic;
   }
   .title-small {
-    @apply text-xl xl:text-3xl max-w-prose font-serif italic;
+    @apply text-xl xl:text-3xl xl:leading-tight max-w-prose font-serif italic leading-tight;
   }
   .prefix {
     @apply text-xs xl:text-sm uppercase text-base-100 tracking-widest inline-block max-w-prose;
@@ -114,6 +128,19 @@
   .custom-arrow svg {
     @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[0.5];
   }
+}
+
+/* Header home sticky --------------------------------- */
+.header-main[data-home] {
+  color: #fff;
+  background-color: transparent;
+  box-shadow: none;
+  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.header-main[data-home][data-scrolled="true"] {
+  color: #3E3930;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
 }
 
 .swiper-pagination {

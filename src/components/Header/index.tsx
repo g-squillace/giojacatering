@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-import { usePathname } from "next/navigation"; // Importa il nuovo hook
+import { usePathname } from "next/navigation";
 import LanguageSelector from "./LanguageSelector";
 import {
   MenuDropdownRecord,
@@ -36,18 +36,30 @@ const invertVariants = {
 };
 
 const Header = ({ lng, hrefs, data, layout }: Props) => {
+  const isHome = layout === "dark";
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [sticky, setSticky] = useState(false);
   const containerRef = useRef(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const scrolledRef = useRef(false);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
-    const handleStickyNavbar = () => setSticky(window.scrollY >= 80);
-    window.addEventListener("scroll", handleStickyNavbar);
-    return () => window.removeEventListener("scroll", handleStickyNavbar);
-  }, []);
+    if (!isHome) return;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const was = scrolledRef.current;
+      if (!was && y >= 80) scrolledRef.current = true;
+      else if (was && y <= 20) scrolledRef.current = false;
+      else return;
+      if (headerRef.current) {
+        headerRef.current.dataset.scrolled = String(scrolledRef.current);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
 
   useEffect(() => {
     if (navbarOpen) {
@@ -118,47 +130,74 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
     }
   });
 
+  const renderMenuItem = (item: Menu, index: number) => (
+    <li key={index} className="py-3 relative has-[.activeClass]:bg-accent">
+      {item.path ? (
+        <a
+          className={`${
+            pathname === item.path ? activeClass : ""
+          } ${itemClass} cursor-pointer`}
+          onClick={() => handleClickMenu(item.path)}
+        >
+          {item.title}
+        </a>
+      ) : (
+        <DropdownMenu
+          sticky={false}
+          navbarOpen={navbarOpen}
+          isMega={false}
+          handleClickAndClose={handleClickMenu}
+          menuItem={item}
+          isDropdownOpen={isDropdownOpen}
+          setIsDropdownOpen={setIsDropdownOpen}
+          itemClass={itemClass}
+        />
+      )}
+    </li>
+  );
+
   return (
-    <header className="header left-0 flex w-full items-center absolute top-0 z-20">
-      <div
-        className={`relative bg-transparent isolate z-20 w-full md:py-4 motion-safe:duration-300 ${
-          layout === "dark" ? "text-white" : "text-secondary-content"
-        }`}
-      >
+    <header
+      ref={headerRef}
+      data-home={isHome || undefined}
+      data-scrolled="false"
+      className={`header-main left-0 flex w-full items-center z-20 ${
+        isHome ? "fixed top-0" : "absolute top-0 text-secondary-content"
+      }`}
+    >
+      <div className="relative isolate z-20 w-full md:py-4">
         <div className="container">
-          <div className="lg:flex w-full justify-end flex-row-reverse items-center gap-x-8 z-[2]">
-            {/* <div className="hidden lg:flex items-center justify-end">
-              <LanguageSelector lng={lng} hrefs={hrefs} />
-            </div> */}
-            <div className="w-full flex justify-between items-center ">
-              <motion.div
-                className="w-16 h-[80px] lg:h-[140px] lg:w-[140px] max-w-full relative z-[11] lg:absolute lg:left-1/2 lg:-translate-x-1/2 top-2"
-                animate={sticky || navbarOpen ? "open" : "closed"}
-                variants={invertVariants}
-              >
-                <a
-                  // href="/"
-                  className="block w-full h-full relative cursor-pointer"
-                  onClick={() => handleClickMenu("/")}
+          <div className={`lg:flex w-full items-center gap-x-8 z-[2] ${isHome ? "lg:justify-center" : "justify-end flex-row-reverse"}`}>
+            <div className={`w-full flex items-center ${isHome ? "lg:justify-center" : "justify-between"}`}>
+              {!isHome && (
+                <motion.div
+                  className="w-16 h-[80px] lg:h-[140px] lg:w-[140px] max-w-full relative z-[11] lg:absolute lg:left-1/2 lg:-translate-x-1/2 top-2"
+                  animate={navbarOpen ? "open" : "closed"}
+                  variants={invertVariants}
                 >
-                  <Image
-                    src={
-                      layout === "dark" || navbarOpen
-                        ? data.layout.logoAlt.url
-                        : data.layout.logoDark.url
-                    }
-                    alt="logo"
-                    className="w-full h-full absolute inset-0 object-center object-contain"
-                    priority
-                    width={100}
-                    height={100}
-                  />
-                </a>
-              </motion.div>
+                  <a
+                    className="block w-full h-full relative cursor-pointer"
+                    onClick={() => handleClickMenu("/")}
+                  >
+                    <Image
+                      src={
+                        navbarOpen
+                          ? data.layout.logoAlt.url
+                          : data.layout.logoDark.url
+                      }
+                      alt="logo"
+                      className="w-full h-full absolute inset-0 object-center object-contain"
+                      priority
+                      width={100}
+                      height={100}
+                    />
+                  </a>
+                </motion.div>
+              )}
               <ButtonMenu
                 navbarToggleHandler={navbarToggleHandler}
                 navbarOpen={navbarOpen}
-                sticky={sticky}
+                sticky={false}
                 layout={layout}
               />
               <motion.nav
@@ -166,9 +205,9 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                 animate={isDropdownOpen ? "open" : "closed"}
                 id="navbarCollapse"
                 ref={containerRef}
-                className={`absolute top-0 left-0 right-0 z-[-1] lg:z-10 motion-safe:duration-700 lg:visible lg:!bg-transparent grid lg:h-auto ${
-                  navbarOpen ? "h-screen" : "h-0"
-                }`}
+                className={`fixed top-0 left-0 right-0 z-[-1] lg:z-10 lg:visible grid lg:h-auto transition-[height] motion-safe:duration-700 ${
+                  isHome ? "lg:relative lg:inset-auto" : "lg:absolute lg:top-0 lg:left-0 lg:right-0"
+                } ${navbarOpen ? "h-screen" : "h-0"}`}
               >
                 <div
                   className={`${
@@ -177,171 +216,26 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                       : "overflow-auto"
                   } lg:overflow-visible w-full h-full bg-base-200 lg:bg-transparent`}
                 >
-                  <ul
-                    className={`${
-                      sticky ? "" : ""
-                    } block items-center w-full lg:max-w-auto pt-32 lg:pt-14 pb-4 lg:pb-0 gap-x-8 lg:flex lg:w-[700px] lg:mx-auto lg:justify-between`}
-                  >
-                    <li>
-                      <ul className="lg:flex gap-x-16">
-                        <li
-                          className={`py-3 relative has-[.activeClass]:bg-accent`}
-                        >
-                          {menuData[0].path ? (
-                            <motion.div
-                              animate={
-                                sticky || isDropdownOpen || navbarOpen
-                                  ? "open"
-                                  : "closed"
-                              }
-                            >
-                              <a
-                                className={`${
-                                  pathname === menuData[0].path
-                                    ? activeClass
-                                    : ""
-                                } ${itemClass} cursor-pointer`}
-                                onClick={() =>
-                                  handleClickMenu(menuData[0].path)
-                                }
-                              >
-                                {menuData[0].title}
-                              </a>
-                            </motion.div>
-                          ) : (
-                            <DropdownMenu
-                              sticky={sticky}
-                              navbarOpen={navbarOpen}
-                              isMega={false}
-                              handleClickAndClose={handleClickMenu}
-                              menuItem={menuData[0]}
-                              isDropdownOpen={isDropdownOpen}
-                              setIsDropdownOpen={setIsDropdownOpen}
-                              itemClass={itemClass}
-                            />
-                          )}
-                        </li>
-                        <li
-                          className={`py-3 relative has-[.activeClass]:bg-accent`}
-                        >
-                          {menuData[1].path ? (
-                            <motion.div
-                              animate={
-                                sticky || isDropdownOpen || navbarOpen
-                                  ? "open"
-                                  : "closed"
-                              }
-                            >
-                              <a
-                                className={`${
-                                  pathname === menuData[1].path
-                                    ? activeClass
-                                    : ""
-                                } ${itemClass} cursor-pointer`}
-                                onClick={() =>
-                                  handleClickMenu(menuData[1].path)
-                                }
-                              >
-                                {menuData[1].title}
-                              </a>
-                            </motion.div>
-                          ) : (
-                            <DropdownMenu
-                              sticky={sticky}
-                              navbarOpen={navbarOpen}
-                              isMega={false}
-                              handleClickAndClose={handleClickMenu}
-                              menuItem={menuData[1]}
-                              isDropdownOpen={isDropdownOpen}
-                              setIsDropdownOpen={setIsDropdownOpen}
-                              itemClass={itemClass}
-                            />
-                          )}
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <ul className="lg:flex gap-x-16">
-                        <li
-                          className={`py-3 relative has-[.activeClass]:bg-accent`}
-                        >
-                          {menuData[2].path ? (
-                            <motion.div
-                              animate={
-                                sticky || isDropdownOpen || navbarOpen
-                                  ? "open"
-                                  : "closed"
-                              }
-                            >
-                              <a
-                                className={`${
-                                  pathname === menuData[2].path
-                                    ? activeClass
-                                    : ""
-                                } ${itemClass} cursor-pointer`}
-                                onClick={() =>
-                                  handleClickMenu(menuData[2].path)
-                                }
-                              >
-                                {menuData[2].title}
-                              </a>
-                            </motion.div>
-                          ) : (
-                            <DropdownMenu
-                              sticky={sticky}
-                              navbarOpen={navbarOpen}
-                              isMega={false}
-                              handleClickAndClose={handleClickMenu}
-                              menuItem={menuData[2]}
-                              isDropdownOpen={isDropdownOpen}
-                              setIsDropdownOpen={setIsDropdownOpen}
-                              itemClass={itemClass}
-                            />
-                          )}
-                        </li>
-                        <li
-                          className={`py-3 relative has-[.activeClass]:bg-accent`}
-                        >
-                          {menuData[3].path ? (
-                            <motion.div
-                              animate={
-                                sticky || isDropdownOpen || navbarOpen
-                                  ? "open"
-                                  : "closed"
-                              }
-                            >
-                              <a
-                                className={`${
-                                  pathname === menuData[3].path
-                                    ? activeClass
-                                    : ""
-                                } ${itemClass} cursor-pointer`}
-                                onClick={() =>
-                                  handleClickMenu(menuData[3].path)
-                                }
-                              >
-                                {menuData[3].title}
-                              </a>
-                            </motion.div>
-                          ) : (
-                            <DropdownMenu
-                              sticky={sticky}
-                              navbarOpen={navbarOpen}
-                              isMega={false}
-                              handleClickAndClose={handleClickMenu}
-                              menuItem={menuData[3]}
-                              isDropdownOpen={isDropdownOpen}
-                              setIsDropdownOpen={setIsDropdownOpen}
-                              itemClass={itemClass}
-                            />
-                          )}
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                  {/* <div className="lg:hidden mt-10 mb-4 container">
-                    <LanguageSelector hrefs={hrefs} lng={lng} />
-                  </div> */}
+                  {isHome ? (
+                    <ul className="block items-center w-full pt-32 lg:pt-0 pb-4 lg:pb-0 lg:flex lg:justify-center lg:gap-x-12 lg:mx-auto">
+                      {menuData.map((item, i) => renderMenuItem(item, i))}
+                    </ul>
+                  ) : (
+                    <ul className="block items-center w-full lg:max-w-auto pt-32 lg:pt-14 pb-4 lg:pb-0 gap-x-8 lg:flex lg:w-[700px] lg:mx-auto lg:justify-between">
+                      <li>
+                        <ul className="lg:flex gap-x-16">
+                          {renderMenuItem(menuData[0], 0)}
+                          {renderMenuItem(menuData[1], 1)}
+                        </ul>
+                      </li>
+                      <li>
+                        <ul className="lg:flex gap-x-16">
+                          {renderMenuItem(menuData[2], 2)}
+                          {renderMenuItem(menuData[3], 3)}
+                        </ul>
+                      </li>
+                    </ul>
+                  )}
                 </div>
               </motion.nav>
             </div>

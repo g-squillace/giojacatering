@@ -16,6 +16,9 @@ import FormBlock from "@/components/Blocks/FormBlock";
 import ElementListBlock from "@/components/Blocks/ElementListBlock";
 import TestimonialsBlock from "../Blocks/TestimonialsBlock";
 import Slideshow from "../Blocks/Slideshow";
+import ImageBlock from "../Blocks/ImageBlock";
+import GalleryBlock from "../Blocks/GalleryBlock";
+import MasonryBlock from "../Blocks/MasonryBlock";
 
 type Props = {
   section: any;
@@ -85,6 +88,18 @@ export default function Sections({
       case "text_block": {
         const textBlockSection = b as TextBlockRecord;
         content = <TextBlock data={textBlockSection} locale={locale} bg={bg} />;
+        break;
+      }
+      case "image_block": {
+        content = <ImageBlock data={b} locale={locale} />;
+        break;
+      }
+      case "gallery_section": {
+        content = <GalleryBlock data={b} locale={locale} />;
+        break;
+      }
+      case "masonry": {
+        content = <MasonryBlock data={b} locale={locale} />;
         break;
       }
       default: {

@@ -1,4 +1,5 @@
 import { JSXElementConstructor, ReactElement } from "react";
+import CustomIcon from "./CustomIcon";
 
 type Props = {
   text:
@@ -10,12 +11,19 @@ type Props = {
 const QuoteBlock = ({ text, author }: Props) => {
   if (!text) return <></>;
   return (
-    <div className="relative py-8">
-      <div className="text-[140px] text-accent italic font-serif absolute -left-8 -top-[20px]">
-        `&quot;`
+    <div className="space-y-8 text-center my-12">
+      <CustomIcon
+        fileName="quote"
+        classes="bg-base-100 size-12 mx-auto"
+      />
+      <div className="title-small mx-auto xl:max-w-3xl">
+        {text}
       </div>
-      <div className="pt-20 font-serif text-md lg:text-2xl">{text}</div>
-      <div className="mt-8 uppercase font-serif text-sm lg:mt-16">{author}</div>
+      {author && (
+        <div className="text-xs uppercase text-base-100 tracking-widest">
+          {author}
+        </div>
+      )}
     </div>
   );
 };

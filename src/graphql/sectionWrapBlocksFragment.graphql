@@ -1,4 +1,8 @@
 fragment wrapSectionBlocks on SectionWrapModelBlocksField {
+  ... on RecordInterface {
+    id
+    _modelApiKey
+  }
   ... on BannerCtaRecord {
     ...bannerCtaRecord
   }
@@ -19,5 +23,18 @@ fragment wrapSectionBlocks on SectionWrapModelBlocksField {
   }
   ... on TextBlockRecord {
     ...textBlockRecord
+  }
+  ... on ImageBlockRecord {
+    ...imageBlockRecord
+  }
+  ... on GallerySectionRecord {
+    ...gallerySectionRecord
+  }
+  ... on MasonryRecord {
+    id
+    _modelApiKey
+    images {
+      ...imageBlockRecord
+    }
   }
 }

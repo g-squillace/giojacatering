@@ -38,7 +38,7 @@ export default function GalleryBlock({
   const nextEl = `#nextButton-${data.id}`;
   const prevEl = `#prevButton-${data.id}`;
   return (
-    <div className="overflow-hidden max-w-[100vw]">
+    <div className="container overflow-hidden">
       <div className="relative gallery">
         <motion.div
           initial="offscreen"

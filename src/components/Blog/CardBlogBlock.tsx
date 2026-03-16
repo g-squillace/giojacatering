@@ -21,7 +21,7 @@ const CardBlogBlock = ({ data, locale, i }: PropsCardBlog) => {
     <InternalLink className="group" record={data} locale={locale} title={title}>
       <div className="bg-secondary text-secondary-content duration-300 relative">
         <SRCImage data={blogImage.responsiveImage} />
-        <div className="p-6 space-y-4">
+        <div className="p-6 space-y-4 2xl:p-12">
           {tags?.length > 0 && (
             <div className="prefix flex gap-1 flex-wrap">
               {getDate(date, locale)} <span className="text-base-200">/</span>

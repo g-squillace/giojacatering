@@ -22,7 +22,10 @@ type GenericPageProps = {
 
 export default function GenericPage({ data, page, locale }: GenericPageProps) {
   const { scrollY } = useScroll();
-  const logoY = useTransform(scrollY, [0, 2000], [0, 250]);
+  const logoLeftY = useTransform(scrollY, [0, 4000], [0, -1200]);
+  const logoLeftRotate = useTransform(scrollY, [0, 4000], [0, -15]);
+  const logoRightY = useTransform(scrollY, [0, 4000], [200, -800]);
+  const logoRightRotate = useTransform(scrollY, [0, 4000], [0, 20]);
 
   if (!page) return null;
   const navItems = [];
@@ -35,33 +38,54 @@ export default function GenericPage({ data, page, locale }: GenericPageProps) {
   }
 
   return (
-    <div>
+    <div className="relative overflow-hidden">
       {page?.hero && <WhichHero hero={page?.hero as any} locale={locale} />}
       {navItems.length > 0 && <MenuInternal navItems={navItems} />}
-      {sections?.map((section: SectionWrapRecord, index: number) => {
+
+      {/* Logo decorativi che si ripetono lungo tutta la pagina */}
+      <div
+        className="absolute inset-x-0 top-[90vh] bottom-0 z-[2] pointer-events-none overflow-hidden"
+        aria-hidden
+      >
+        <motion.div
+          style={{ y: logoLeftY, rotate: logoLeftRotate }}
+          className="absolute top-[0%] left-[3%] flex flex-col gap-[80vh]"
+        >
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Image
+              key={`left-${i}`}
+              src="/assets/logo.svg"
+              alt=""
+              width={200}
+              height={200}
+              className="w-[45vw] h-[45vw] opacity-[0.6]"
+            />
+          ))}
+        </motion.div>
+        <motion.div
+          style={{ y: logoRightY, rotate: logoRightRotate }}
+          className="absolute top-[60vh] right-[3%] flex flex-col gap-[80vh]"
+        >
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Image
+              key={`right-${i}`}
+              src="/assets/logo.svg"
+              alt=""
+              width={200}
+              height={200}
+              className="w-[45vw] h-[45vw] opacity-[0.6]"
+            />
+          ))}
+        </motion.div>
+      </div>
+
+      {sections?.map((section: SectionWrapRecord) => {
         return (
           <section
             key={section.id}
             className={`${section.style} py-px -mt-[2px] relative`}
             id={section.label ? convertToSlug(section.label) : null}
           >
-            {index === 0 && (
-              <motion.div
-                style={{
-                  y: logoY,
-                  x: "-50%",
-                }}
-                className="absolute z-0 top-20 left-1/2 w-[80vw] h-[80vw]"
-              >
-                <Image
-                  src="/assets/logo.svg"
-                  alt="Gioja Catering"
-                  width={200}
-                  height={200}
-                  className="w-full h-full"
-                />
-              </motion.div>
-            )}
             {section.blocks && (
               <Sections
                 section={section}
