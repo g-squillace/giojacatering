@@ -58,7 +58,7 @@ export default function GenericPage({ data, page, locale }: GenericPageProps) {
               alt=""
               width={200}
               height={200}
-              className="w-[45vw] h-[45vw] opacity-[0.6]"
+              className="w-[45vw] h-[45vw]"
             />
           ))}
         </motion.div>
@@ -73,7 +73,7 @@ export default function GenericPage({ data, page, locale }: GenericPageProps) {
               alt=""
               width={200}
               height={200}
-              className="w-[45vw] h-[45vw] opacity-[0.6]"
+              className="w-[45vw] h-[45vw]"
             />
           ))}
         </motion.div>

@@ -130,18 +130,23 @@
   }
 }
 
-/* Header home sticky --------------------------------- */
+/* Header sticky --------------------------------- */
+.header-main {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
 .header-main[data-home] {
   color: #fff;
   background-color: transparent;
   box-shadow: none;
-  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
-.header-main[data-home][data-scrolled="true"] {
+.header-main[data-home][data-scrolled="true"],
+.header-main:not([data-home])[data-scrolled="true"] {
   color: #3E3930;
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
 }
+
 
 .swiper-pagination {
   @apply !relative mt-12;

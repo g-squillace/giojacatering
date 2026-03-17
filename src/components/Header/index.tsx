@@ -30,15 +30,11 @@ const activeClass = "underline underline-offset-4";
 const itemClass =
   "lg:px-0 hover:underline whitespace-nowrap lg:text-sm duration-200 px-6 flex items-center gap-1 text-lg lg:uppercase lg:font-semibold lg:tracking-wider";
 
-const invertVariants = {
-  open: { transition: { ease: "easeOut", duration: 0.25 } },
-  closed: { transition: { ease: "easeOut", duration: 0.25 } },
-};
-
 const Header = ({ lng, hrefs, data, layout }: Props) => {
   const isHome = layout === "dark";
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const containerRef = useRef(null);
   const headerRef = useRef<HTMLElement>(null);
   const scrolledRef = useRef(false);
@@ -46,20 +42,20 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isHome) return;
     const onScroll = () => {
       const y = window.scrollY;
       const was = scrolledRef.current;
       if (!was && y >= 80) scrolledRef.current = true;
       else if (was && y <= 20) scrolledRef.current = false;
       else return;
+      setScrolled(scrolledRef.current);
       if (headerRef.current) {
         headerRef.current.dataset.scrolled = String(scrolledRef.current);
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isHome]);
+  }, []);
 
   useEffect(() => {
     if (navbarOpen) {
@@ -161,19 +157,19 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
       ref={headerRef}
       data-home={isHome || undefined}
       data-scrolled="false"
-      className={`header-main left-0 flex w-full items-center z-20 ${
-        isHome ? "fixed top-0" : "absolute top-0 text-secondary-content"
+      className={`header-main left-0 flex w-full items-center z-20 fixed top-0 ${
+        isHome ? "" : "text-secondary-content"
       }`}
     >
-      <div className="relative isolate z-20 w-full md:py-4">
+      <div className="relative isolate z-20 w-full py-2 transition-all duration-300">
         <div className="container">
-          <div className={`lg:flex w-full items-center gap-x-8 z-[2] ${isHome ? "lg:justify-center" : "justify-end flex-row-reverse"}`}>
-            <div className={`w-full flex items-center ${isHome ? "lg:justify-center" : "justify-between"}`}>
+          <div className={`lg:flex w-full items-center gap-x-8 z-[2] ${isHome || scrolled ? "lg:justify-center" : "justify-end flex-row-reverse"}`}>
+            <div className={`w-full flex items-center ${isHome || scrolled ? "lg:justify-center" : "justify-between"}`}>
               {!isHome && (
-                <motion.div
-                  className="w-16 h-[80px] lg:h-[140px] lg:w-[140px] max-w-full relative z-[11] lg:absolute lg:left-1/2 lg:-translate-x-1/2 top-2"
-                  animate={navbarOpen ? "open" : "closed"}
-                  variants={invertVariants}
+                <div
+                  className={`header-logo w-16 h-[80px] lg:h-[140px] lg:w-[140px] max-w-full relative z-[11] lg:absolute lg:left-1/2 lg:-translate-x-1/2 top-2 transition-all duration-300 ${
+                    scrolled ? "lg:opacity-0 lg:scale-75 lg:pointer-events-none" : "lg:opacity-100 lg:scale-100"
+                  }`}
                 >
                   <a
                     className="block w-full h-full relative cursor-pointer"
@@ -192,7 +188,7 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                       height={100}
                     />
                   </a>
-                </motion.div>
+                </div>
               )}
               <ButtonMenu
                 navbarToggleHandler={navbarToggleHandler}
@@ -206,7 +202,7 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                 id="navbarCollapse"
                 ref={containerRef}
                 className={`fixed top-0 left-0 right-0 z-[-1] lg:z-10 lg:visible grid lg:h-auto transition-[height] motion-safe:duration-700 ${
-                  isHome ? "lg:relative lg:inset-auto" : "lg:absolute lg:top-0 lg:left-0 lg:right-0"
+                  isHome || scrolled ? "lg:relative lg:inset-auto" : "lg:absolute lg:top-0 lg:left-0 lg:right-0"
                 } ${navbarOpen ? "h-screen" : "h-0"}`}
               >
                 <div
@@ -221,20 +217,31 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                       {menuData.map((item, i) => renderMenuItem(item, i))}
                     </ul>
                   ) : (
-                    <ul className="block items-center w-full lg:max-w-auto pt-32 lg:pt-14 pb-4 lg:pb-0 gap-x-8 lg:flex lg:w-[700px] lg:mx-auto lg:justify-between">
-                      <li>
-                        <ul className="lg:flex gap-x-16">
-                          {renderMenuItem(menuData[0], 0)}
-                          {renderMenuItem(menuData[1], 1)}
-                        </ul>
-                      </li>
-                      <li>
-                        <ul className="lg:flex gap-x-16">
-                          {renderMenuItem(menuData[2], 2)}
-                          {renderMenuItem(menuData[3], 3)}
-                        </ul>
-                      </li>
-                    </ul>
+                    <div className={`relative transition-all duration-300 ${scrolled ? "lg:min-h-0" : "lg:min-h-[140px]"}`}>
+                      {/* Layout standard — due gruppi con spazio per il logo */}
+                      <ul className={`block lg:items-center w-full lg:max-w-auto pt-32 lg:pt-0 pb-4 lg:pb-0 lg:flex lg:min-h-[140px] lg:w-[700px] lg:mx-auto lg:justify-between transition-all duration-300 ${
+                        scrolled ? "lg:opacity-0 lg:pointer-events-none lg:min-h-0 lg:h-0 lg:overflow-hidden lg:pt-0 lg:pb-0" : "lg:opacity-100"
+                      }`}>
+                        <li>
+                          <ul className="lg:flex gap-x-10">
+                            {renderMenuItem(menuData[0], 0)}
+                            {renderMenuItem(menuData[1], 1)}
+                          </ul>
+                        </li>
+                        <li>
+                          <ul className="lg:flex gap-x-10">
+                            {renderMenuItem(menuData[2], 2)}
+                            {renderMenuItem(menuData[3], 3)}
+                          </ul>
+                        </li>
+                      </ul>
+                      {/* Layout scrolled — voci in fila come home */}
+                      <ul className={`hidden lg:flex items-center w-full py-1 lg:justify-center lg:gap-x-12 lg:mx-auto transition-opacity duration-300 delay-150 ${
+                        scrolled ? "lg:opacity-100" : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0"
+                      }`}>
+                        {menuData.map((item, i) => renderMenuItem(item, i))}
+                      </ul>
+                    </div>
                   )}
                 </div>
               </motion.nav>
