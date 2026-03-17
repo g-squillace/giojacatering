@@ -161,14 +161,14 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
         isHome ? "" : "text-secondary-content"
       }`}
     >
-      <div className="relative isolate z-20 w-full py-2 transition-all duration-300">
+      <div className={`relative isolate z-20 w-full transition-all duration-300 ${scrolled && !isHome ? "py-1" : "py-2"}`}>
         <div className="container">
           <div className={`lg:flex w-full items-center gap-x-8 z-[2] ${isHome || scrolled ? "lg:justify-center" : "justify-end flex-row-reverse"}`}>
             <div className={`w-full flex items-center ${isHome || scrolled ? "lg:justify-center" : "justify-between"}`}>
               {!isHome && (
                 <div
-                  className={`header-logo w-16 h-[80px] lg:h-[140px] lg:w-[140px] max-w-full relative z-[11] lg:absolute lg:left-1/2 lg:-translate-x-1/2 top-2 transition-all duration-300 ${
-                    scrolled ? "lg:opacity-0 lg:scale-75 lg:pointer-events-none" : "lg:opacity-100 lg:scale-100"
+                  className={`header-logo max-w-full relative z-[11] lg:absolute lg:left-1/2 lg:-translate-x-1/2 transition-all duration-300 ${
+                    scrolled ? "w-0 h-0 opacity-0 pointer-events-none overflow-hidden" : "w-16 h-[80px] lg:h-[140px] lg:w-[140px] top-2 opacity-100 scale-100"
                   }`}
                 >
                   <a
@@ -219,8 +219,8 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                   ) : (
                     <div className={`relative transition-all duration-300 ${scrolled ? "lg:min-h-0" : "lg:min-h-[140px]"}`}>
                       {/* Layout standard — due gruppi con spazio per il logo */}
-                      <ul className={`block lg:items-center w-full lg:max-w-auto pt-32 lg:pt-0 pb-4 lg:pb-0 lg:flex lg:min-h-[140px] lg:w-[700px] lg:mx-auto lg:justify-between transition-all duration-300 ${
-                        scrolled ? "lg:opacity-0 lg:pointer-events-none lg:min-h-0 lg:h-0 lg:overflow-hidden lg:pt-0 lg:pb-0" : "lg:opacity-100"
+                      <ul className={`block lg:items-center w-full lg:max-w-auto lg:flex lg:w-[700px] lg:mx-auto lg:justify-between transition-all duration-300 ${
+                        scrolled ? "lg:hidden pt-32 pb-4" : "lg:opacity-100 lg:min-h-[140px] pt-32 lg:pt-0 pb-4 lg:pb-0"
                       }`}>
                         <li>
                           <ul className="lg:flex gap-x-10">
@@ -236,7 +236,7 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                         </li>
                       </ul>
                       {/* Layout scrolled — voci in fila come home */}
-                      <ul className={`hidden lg:flex items-center w-full py-1 lg:justify-center lg:gap-x-12 lg:mx-auto transition-opacity duration-300 delay-150 ${
+                      <ul className={`hidden lg:flex items-center w-full py-3 lg:justify-center lg:gap-x-12 lg:mx-auto transition-opacity duration-300 delay-150 ${
                         scrolled ? "lg:opacity-100" : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0"
                       }`}>
                         {menuData.map((item, i) => renderMenuItem(item, i))}
