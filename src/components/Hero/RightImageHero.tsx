@@ -38,7 +38,7 @@ const RightImageHero = ({
                 />
               )}
             </div>
-            <div className="w-full lg:w-5/12 mx-auto">
+            <div className="w-full lg:w-5/12 mx-auto pb-2">
               <div className="mb-14 lg:mb-0 grid gap-6 text-center">
                 {heroTitle && (
                   <h1 className="title xl:text-5xl">{heroTitle}</h1>

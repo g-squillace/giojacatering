@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { SRCImage } from "react-datocms";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -137,83 +138,87 @@ export default function MasonryBlock({ data, locale }: Props) {
         </AnimatePresence>
       </motion.div>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {activeImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
-            onClick={closeLightbox}
-          >
-            <button
-              onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white text-3xl leading-none cursor-pointer z-10 hover:opacity-70 transition-opacity"
-              aria-label="Chiudi"
-            >
-              ✕
-            </button>
-
-            {filtered.length > 1 && (
-              <>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    goPrev();
-                  }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl cursor-pointer z-10 hover:opacity-70 transition-opacity"
-                  aria-label="Precedente"
-                >
-                  ‹
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    goNext();
-                  }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl cursor-pointer z-10 hover:opacity-70 transition-opacity"
-                  aria-label="Successiva"
-                >
-                  ›
-                </button>
-              </>
-            )}
-
-            <div
-              className="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <motion.img
-                key={activeImage.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+      {/* Lightbox — portal to body so it sits above the fixed header */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {activeImage && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                src={activeImage.imageAsset.responsiveImage.src}
-                alt={activeImage.imageAsset.responsiveImage.alt || ""}
-                className="max-w-full max-h-[80vh] object-contain"
-              />
-              <div className="mt-4 text-center">
-                {activeImage.tag && (
-                  <span className="prefix text-white/60 block mb-1">
-                    {activeImage.tag.tag}
-                  </span>
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90"
+                onClick={closeLightbox}
+              >
+                <button
+                  onClick={closeLightbox}
+                  className="absolute top-6 right-6 text-white text-3xl leading-none cursor-pointer z-10 hover:opacity-70 transition-opacity"
+                  aria-label="Chiudi"
+                >
+                  ✕
+                </button>
+
+                {filtered.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goPrev();
+                      }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl cursor-pointer z-10 hover:opacity-70 transition-opacity"
+                      aria-label="Precedente"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goNext();
+                      }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl cursor-pointer z-10 hover:opacity-70 transition-opacity"
+                      aria-label="Successiva"
+                    >
+                      ›
+                    </button>
+                  </>
                 )}
-                {activeImage.imageDescription && (
-                  <div
-                    className="text-white/80 text-sm"
-                    dangerouslySetInnerHTML={{
-                      __html: activeImage.imageDescription,
-                    }}
+
+                <div
+                  className="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <motion.img
+                    key={activeImage.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    src={activeImage.imageAsset.responsiveImage.src}
+                    alt={activeImage.imageAsset.responsiveImage.alt || ""}
+                    className="max-w-full max-h-[80vh] object-contain"
                   />
-                )}
-              </div>
-            </div>
-          </motion.div>
+                  <div className="mt-4 text-center">
+                    {activeImage.tag && (
+                      <span className="prefix text-white/60 block mb-1">
+                        {activeImage.tag.tag}
+                      </span>
+                    )}
+                    {activeImage.imageDescription && (
+                      <div
+                        className="text-white/80 text-sm"
+                        dangerouslySetInnerHTML={{
+                          __html: activeImage.imageDescription,
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </div>
   );
 }

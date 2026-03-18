@@ -217,10 +217,10 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                       {menuData.map((item, i) => renderMenuItem(item, i))}
                     </ul>
                   ) : (
-                    <div className={`relative transition-all duration-300 ${scrolled ? "lg:min-h-0" : "lg:min-h-[140px]"}`}>
+                    <div className="relative">
                       {/* Layout standard — due gruppi con spazio per il logo */}
-                      <ul className={`block lg:items-center w-full lg:max-w-auto lg:flex lg:w-[700px] lg:mx-auto lg:justify-between transition-all duration-300 ${
-                        scrolled ? "lg:hidden pt-32 pb-4" : "lg:opacity-100 lg:min-h-[140px] pt-32 lg:pt-0 pb-4 lg:pb-0"
+                      <ul className={`block lg:items-center w-full lg:max-w-auto lg:flex lg:w-[700px] lg:mx-auto lg:justify-between transition-all duration-300 pt-32 lg:pt-0 pb-4 lg:pb-0 ${
+                        scrolled ? "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0 lg:min-h-0" : "lg:opacity-100 lg:min-h-[140px]"
                       }`}>
                         <li>
                           <ul className="lg:flex gap-x-10">
@@ -236,8 +236,8 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                         </li>
                       </ul>
                       {/* Layout scrolled — voci in fila come home */}
-                      <ul className={`hidden lg:flex items-center w-full py-3 lg:justify-center lg:gap-x-12 lg:mx-auto transition-opacity duration-300 delay-150 ${
-                        scrolled ? "lg:opacity-100" : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0"
+                      <ul className={`hidden lg:flex items-center w-full py-3 lg:justify-center lg:gap-x-12 lg:mx-auto transition-all duration-300 ${
+                        scrolled ? "lg:opacity-100 lg:relative" : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0 lg:h-0"
                       }`}>
                         {menuData.map((item, i) => renderMenuItem(item, i))}
                       </ul>
