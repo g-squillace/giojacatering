@@ -157,18 +157,26 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
       ref={headerRef}
       data-home={isHome || undefined}
       data-scrolled="false"
-      className={`header-main left-0 flex w-full items-center z-20 fixed top-0 ${
-        isHome ? "" : "text-secondary-content"
+      className={`header-main left-0 flex w-full items-center z-20 fixed top-0 transition-colors duration-300 ${
+        isHome && !scrolled ? "text-white" : "text-secondary-content"
       }`}
     >
-      <div className={`relative isolate z-20 w-full transition-all duration-300 ${scrolled && !isHome ? "py-1" : "py-2"}`}>
+      <div
+        className={`relative isolate z-20 w-full transition-all duration-300 ${scrolled && !isHome ? "py-1" : "py-2"}`}
+      >
         <div className="container">
-          <div className={`lg:flex w-full items-center gap-x-8 z-[2] ${isHome || scrolled ? "lg:justify-center" : "justify-end flex-row-reverse"}`}>
-            <div className={`w-full flex items-center ${isHome || scrolled ? "lg:justify-center" : "justify-between"}`}>
+          <div
+            className={`flex-row-reverse lg:flex w-full items-center gap-x-8 justify-end z-[2] ${isHome || scrolled ? "lg:justify-center" : ""}`}
+          >
+            <div
+              className={`w-full flex items-center justify-end ${isHome || scrolled ? "lg:justify-center" : "justify-between"}`}
+            >
               {!isHome && (
                 <div
                   className={`header-logo max-w-full relative z-[11] lg:absolute lg:left-1/2 lg:-translate-x-1/2 transition-all duration-300 ${
-                    scrolled ? "w-0 h-0 opacity-0 pointer-events-none overflow-hidden" : "w-16 h-[80px] lg:h-[140px] lg:w-[140px] top-2 opacity-100 scale-100"
+                    scrolled
+                      ? "w-0 h-0 opacity-0 pointer-events-none overflow-hidden"
+                      : "w-16 h-[80px] lg:h-[140px] lg:w-[140px] top-2 opacity-100 scale-100"
                   }`}
                 >
                   <a
@@ -194,6 +202,7 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                 navbarToggleHandler={navbarToggleHandler}
                 navbarOpen={navbarOpen}
                 sticky={false}
+                scrolled={scrolled}
                 layout={layout}
               />
               <motion.nav
@@ -202,7 +211,9 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                 id="navbarCollapse"
                 ref={containerRef}
                 className={`fixed top-0 left-0 right-0 z-[-1] lg:z-10 lg:visible grid lg:h-auto transition-[height] motion-safe:duration-700 ${
-                  isHome || scrolled ? "lg:relative lg:inset-auto" : "lg:absolute lg:top-0 lg:left-0 lg:right-0"
+                  isHome || scrolled
+                    ? "lg:relative lg:inset-auto"
+                    : "lg:absolute lg:top-0 lg:left-0 lg:right-0"
                 } ${navbarOpen ? "h-screen" : "h-0"}`}
               >
                 <div
@@ -219,9 +230,13 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                   ) : (
                     <div className="relative">
                       {/* Layout standard — due gruppi con spazio per il logo */}
-                      <ul className={`block lg:items-center w-full lg:max-w-auto lg:flex lg:w-[700px] lg:mx-auto lg:justify-between transition-all duration-300 pt-32 lg:pt-0 pb-4 lg:pb-0 ${
-                        scrolled ? "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0 lg:min-h-0" : "lg:opacity-100 lg:min-h-[140px]"
-                      }`}>
+                      <ul
+                        className={`block lg:items-center w-full lg:max-w-auto lg:flex lg:w-[700px] lg:mx-auto lg:justify-between transition-all duration-300 pt-32 lg:pt-0 pb-4 lg:pb-0 ${
+                          scrolled
+                            ? "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0 lg:min-h-0"
+                            : "lg:opacity-100 lg:min-h-[140px]"
+                        }`}
+                      >
                         <li>
                           <ul className="lg:flex gap-x-10">
                             {renderMenuItem(menuData[0], 0)}
@@ -236,9 +251,13 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                         </li>
                       </ul>
                       {/* Layout scrolled — voci in fila come home */}
-                      <ul className={`hidden lg:flex items-center w-full py-3 lg:justify-center lg:gap-x-12 lg:mx-auto transition-all duration-300 ${
-                        scrolled ? "lg:opacity-100 lg:relative" : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0 lg:h-0"
-                      }`}>
+                      <ul
+                        className={`hidden lg:flex items-center w-full py-3 lg:justify-center lg:gap-x-12 lg:mx-auto transition-all duration-300 ${
+                          scrolled
+                            ? "lg:opacity-100 lg:relative"
+                            : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0 lg:h-0"
+                        }`}
+                      >
                         {menuData.map((item, i) => renderMenuItem(item, i))}
                       </ul>
                     </div>
