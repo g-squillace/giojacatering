@@ -139,7 +139,7 @@ const ContactForm = ({ locale }: PropsContactForm) => {
               {translate("formPhoneNumber", locale)}
             </label>
             <input
-              type="number"
+              type="text"
               name="phone"
               id="phone"
               autoComplete="tel"
@@ -184,7 +184,7 @@ const ContactForm = ({ locale }: PropsContactForm) => {
                 label={"Privacy Policy"}
                 url={`//www.iubenda.com/privacy-policy/${translate(
                   "cookiePolicyId",
-                  locale
+                  locale,
                 )}`}
                 className="iubenda-nostyle no-brand iubenda-embed iubenda-noiframe underline font-extra-bold"
               >
