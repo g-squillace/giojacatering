@@ -39,9 +39,10 @@ const ContactForm = ({ locale }: PropsContactForm) => {
     const res = await fetch(formWebhook, {
       method: "POST",
       body: formData,
+      headers: { Accept: "application/json" },
     }).then((res) => res.json());
 
-    if (res.status == "success") {
+    if (res.ok || res.status === "success") {
       setResult("success");
     } else {
       setResult("error");
