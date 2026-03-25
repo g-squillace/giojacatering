@@ -7,7 +7,7 @@ export default function WhatsAppButton() {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/\+/g, "")}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999]">
+    <div className="fixed bottom-16 right-2.5 z-[9999]">
       <span className="absolute inset-0 h-12 w-12 animate-pulse rounded-full bg-[#25D366] opacity-40" />
       <a
         href={whatsappUrl}

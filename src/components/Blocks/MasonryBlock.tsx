@@ -77,13 +77,13 @@ export default function MasonryBlock({ data, locale }: Props) {
   return (
     <div className="container">
       {tags.length > 0 && (
-        <div className="flex flex-wrap gap-3 mb-12 justify-center">
+        <div className="flex flex-wrap gap-2 mb-12 justify-center">
           <button
             onClick={() => setActiveTag(null)}
-            className={`prefix cursor-pointer pb-1 border-b-2 transition-colors ${
+            className={`prefix cursor-pointer px-5 py-2 rounded-full border text-sm tracking-wider transition-all duration-200 ${
               activeTag === null
-                ? "border-primary-content text-primary-content"
-                : "border-transparent text-base-100 hover:text-primary-content"
+                ? "bg-primary-content text-white border-primary-content"
+                : "bg-transparent text-primary-content border-primary-content/30 hover:border-primary-content hover:bg-primary-content/5"
             }`}
           >
             Tutti
@@ -92,10 +92,10 @@ export default function MasonryBlock({ data, locale }: Props) {
             <button
               key={tag.id}
               onClick={() => setActiveTag(tag.id)}
-              className={`prefix cursor-pointer pb-1 border-b-2 transition-colors ${
+              className={`prefix cursor-pointer px-5 py-2 rounded-full border text-sm tracking-wider transition-all duration-200 ${
                 activeTag === tag.id
-                  ? "border-primary-content text-primary-content"
-                  : "border-transparent text-base-100 hover:text-primary-content"
+                  ? "bg-primary-content text-white border-primary-content"
+                  : "bg-transparent text-primary-content border-primary-content/30 hover:border-primary-content hover:bg-primary-content/5"
               }`}
             >
               {tag.tag}
@@ -103,7 +103,7 @@ export default function MasonryBlock({ data, locale }: Props) {
           ))}
         </div>
       )}
-      <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-6">
+      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
           {filtered.map((img, i) => (
             <motion.div
@@ -113,7 +113,7 @@ export default function MasonryBlock({ data, locale }: Props) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="mb-6 break-inside-avoid cursor-pointer group"
+              className="cursor-pointer group"
               onClick={() => setLightboxIndex(i)}
             >
               <div className="overflow-hidden relative aspect-video">
