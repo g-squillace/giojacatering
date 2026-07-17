@@ -6,6 +6,7 @@ import CustomIcon from "@/components/Blocks/CustomIcon";
 import Socials from "@/components/Footer/Socials";
 import Iubenda from "@/components/Footer/ExternalServices/Iubenda";
 import GoogleAnalytics from "@/components/Footer/ExternalServices/GoogleAnalytics";
+import FacebookPixel from "@/components/Footer/ExternalServices/FacebookPixel";
 import MenuFooter from "@/components/Footer/MenuFooter";
 
 type Props = {
@@ -18,7 +19,6 @@ const year = new Date().getFullYear();
 const ENV = process.env.DATO_ENV;
 
 const Footer = ({ data, lng }: Props) => {
-  console.log("data.layout:", data?.layout);
   if (!data?.layout) return null;
   const {
     rea,
@@ -37,6 +37,7 @@ const Footer = ({ data, lng }: Props) => {
     iubendaPolicyId,
     iubendaSiteId,
     googleAnalyticsId,
+    facebookPixelId,
   } = data?.layout;
   return (
     <>
@@ -107,6 +108,9 @@ const Footer = ({ data, lng }: Props) => {
       )}
       {googleAnalyticsId && ENV !== "develop" && (
         <GoogleAnalytics id={googleAnalyticsId} />
+      )}
+      {facebookPixelId && ENV !== "develop" && (
+        <FacebookPixel id={facebookPixelId} />
       )}
     </>
   );

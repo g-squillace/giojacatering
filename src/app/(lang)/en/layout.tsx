@@ -36,6 +36,11 @@ export async function generateMetadata() {
       locale,
       type: "website",
     },
+    verification: {
+      other: {
+        "facebook-domain-verification": "wmsy07pk585wh52j0ocsck94npupne",
+      },
+    },
   };
   return metaObject;
 }

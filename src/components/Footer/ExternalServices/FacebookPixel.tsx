@@ -1,11 +1,15 @@
-export default function FacebookPixel({ id }) {
+import Script from "next/script";
+
+export default function FacebookPixel({ id }: { id: string }) {
   return (
     <>
-      {/* <script
+      <Script
+        id="facebook-pixel"
         type="plain/text"
         className="_iub_cs_activate"
         data-iub-purposes="5"
-        dangerouslySetInnerHTML={{__html: `
+        dangerouslySetInnerHTML={{
+          __html: `
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -19,19 +23,15 @@ export default function FacebookPixel({ id }) {
           `,
         }}
       />
-      <noscript
-        type="text/plain"
-        className="_iub_cs_activate"
-        data-iub-purposes="5"
-      >
+      <noscript>
         <img
           height="1"
           width="1"
           alt=""
-          style={{display: 'none'}}
+          style={{ display: "none" }}
           src={`https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1`}
         />
-      </noscript> */}
+      </noscript>
     </>
   );
 }
