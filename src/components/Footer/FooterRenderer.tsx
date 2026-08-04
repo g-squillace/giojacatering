@@ -36,8 +36,6 @@ const Footer = ({ data, lng }: Props) => {
     colorReverseBanner,
     iubendaPolicyId,
     iubendaSiteId,
-    googleAnalyticsId,
-    facebookPixelId,
   } = data?.layout;
   return (
     <>
@@ -106,11 +104,11 @@ const Footer = ({ data, lng }: Props) => {
           colorRev={colorReverseBanner}
         />
       )}
-      {googleAnalyticsId && ENV !== "develop" && (
-        <GoogleAnalytics id={googleAnalyticsId} />
-      )}
-      {facebookPixelId && ENV !== "develop" && (
-        <FacebookPixel id={facebookPixelId} />
+      {ENV !== "develop" && (
+        <>
+          <GoogleAnalytics />
+          <FacebookPixel />
+        </>
       )}
     </>
   );

@@ -31,7 +31,7 @@ export default function Iubenda({
             "lgpdAppliesGlobally":false,
             "perPurposeConsent":true,
             "whitelabel":true,
-            "purposes":"1, 3, 4",
+            "purposes":"1, 3, 4, 5",
             "siteId":${siteId},
             "cookiePolicyId":${policyId},
             "lang":"${locale}",

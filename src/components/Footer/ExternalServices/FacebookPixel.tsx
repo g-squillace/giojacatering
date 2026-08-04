@@ -1,11 +1,13 @@
 import Script from "next/script";
 
-export default function FacebookPixel({ id }: { id: string }) {
+const FACEBOOK_PIXEL_ID = "838139752325121";
+
+export default function FacebookPixel() {
   return (
     <>
       <Script
         id="facebook-pixel"
-        type="plain/text"
+        type="text/plain"
         className="_iub_cs_activate"
         data-iub-purposes="5"
         dangerouslySetInnerHTML={{
@@ -18,20 +20,11 @@ export default function FacebookPixel({ id }: { id: string }) {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '${id}');
+          fbq('init', '${FACEBOOK_PIXEL_ID}');
           fbq('track', 'PageView');
           `,
         }}
       />
-      <noscript>
-        <img
-          height="1"
-          width="1"
-          alt=""
-          style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1`}
-        />
-      </noscript>
     </>
   );
 }
