@@ -20,11 +20,18 @@ import ImageBlock from "../Blocks/ImageBlock";
 import GalleryBlock from "../Blocks/GalleryBlock";
 import MasonryBlock from "../Blocks/MasonryBlock";
 
+export type SectionContacts = {
+  address?: string | null;
+  email?: string | null;
+  phone?: string | null;
+} | null;
+
 type Props = {
   section: any;
   locale: SiteLocale;
   lastPosts?: PostRecord[];
   lastEvents?: EventRecord[];
+  contacts?: SectionContacts;
 };
 
 export default function Sections({
@@ -32,6 +39,7 @@ export default function Sections({
   locale,
   lastPosts,
   lastEvents,
+  contacts,
 }: Props) {
   const numBlocks = section.blocks.length;
   const bg =
@@ -72,7 +80,9 @@ export default function Sections({
         break;
       }
       case "form_block": {
-        content = <FormBlock data={b} locale={locale} />;
+        content = (
+          <FormBlock data={b} locale={locale} contacts={contacts} />
+        );
         break;
       }
       case "slideshow":

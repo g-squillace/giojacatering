@@ -57,4 +57,9 @@ query Page($locale: SiteLocale, $fallbackLocale: [SiteLocale!], $slug: String) {
   _allEventsMeta(locale: $locale, filter: { title: { isBlank: "false" } }) {
     count
   }
+  layout(locale: $locale, fallbackLocales: $fallbackLocale) {
+    address
+    email
+    phone
+  }
 }

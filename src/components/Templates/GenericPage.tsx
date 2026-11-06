@@ -92,6 +92,7 @@ export default function GenericPage({ data, page, locale }: GenericPageProps) {
                 locale={locale}
                 lastPosts={data.allPosts as PostRecord[]}
                 lastEvents={data.allEvents as EventRecord[]}
+                contacts={data.layout}
               />
             )}
           </section>

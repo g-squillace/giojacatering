@@ -2,10 +2,12 @@ import { FormBlockRecord, SiteLocale } from "@/graphql/generated";
 import Form from "@/components/Form/Form";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
+import type { SectionContacts } from "@/components/Sections";
 
 type PropsFormBlock = {
   data: FormBlockRecord;
   locale: SiteLocale;
+  contacts?: SectionContacts;
 };
 
 const variants: Variants = {
@@ -22,8 +24,13 @@ const variants: Variants = {
   },
 };
 
-const FormBlock = ({ data, locale }: PropsFormBlock) => {
+const FormBlock = ({ data, locale, contacts }: PropsFormBlock) => {
   const { titleForm, textForm } = data;
+  const address = contacts?.address;
+  const email = contacts?.email;
+  const phone = contacts?.phone;
+  const telHref = phone ? `tel:${phone.replace(/[^+\d]/g, "")}` : null;
+  const linkClass = "hover:underline underline-offset-4";
   return (
     <>
       <div className="container relative xl:w-10/12">
@@ -44,40 +51,64 @@ const FormBlock = ({ data, locale }: PropsFormBlock) => {
                 />
               )}
             </div>
-            <div className="gap-6 m-4 pt-4">
-              <div className="flex gap-4 items-start">
-                <Image
-                  src="assets/pin.svg"
-                  width="20"
-                  height="20"
-                  alt=""
-                  aria-hidden="true"
-                  className="size-10"
-                />
-                <div className="">
-                  <div className="title-small">Indirizzo</div>
+            {address && (
+              <div className="gap-6 m-4 pt-4">
+                <div className="flex gap-4 items-start">
+                  <Image
+                    src="assets/pin.svg"
+                    width="20"
+                    height="20"
+                    alt=""
+                    aria-hidden="true"
+                    className="size-10"
+                  />
                   <div className="">
-                    Strada di Busseto 18, Siena, Italy 53100.
+                    <div className="title-small">Indirizzo</div>
+                    <address className="not-italic">{address}</address>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="gap-6 m-4 pt-4">
-              <div className="flex gap-4 items-start">
-                <Image
-                  src="assets/mail.svg"
-                  width="20"
-                  height="20"
-                  alt=""
-                  aria-hidden="true"
-                  className="size-9"
-                />
-                <div className="">
-                  <div className="title-small">Email</div>
-                  <div className="">info@giojacatering.com </div>
+            )}
+            {email && (
+              <div className="gap-6 m-4 pt-4">
+                <div className="flex gap-4 items-start">
+                  <Image
+                    src="assets/mail.svg"
+                    width="20"
+                    height="20"
+                    alt=""
+                    aria-hidden="true"
+                    className="size-9"
+                  />
+                  <div className="">
+                    <div className="title-small">Email</div>
+                    <a href={`mailto:${email}`} className={linkClass}>
+                      {email}
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {phone && telHref && (
+              <div className="gap-6 m-4 pt-4">
+                <div className="flex gap-4 items-start">
+                  <Image
+                    src="assets/call.svg"
+                    width="20"
+                    height="20"
+                    alt=""
+                    aria-hidden="true"
+                    className="size-9"
+                  />
+                  <div className="">
+                    <div className="title-small">Telefono</div>
+                    <a href={telHref} className={linkClass}>
+                      {phone}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <Form locale={locale} />
         </motion.div>
