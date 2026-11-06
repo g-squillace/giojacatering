@@ -29,7 +29,7 @@ export default async function fetchDato<
   const next =
     process.env.MODE === "development"
       ? { revalidate: 0 }
-      : { revaldate: 60 * 60, tags: ["datocms"] };
+      : { revalidate: 60 * 60, tags: ["datocms"] };
 
   const { data } = await (
     await fetch("https://graphql.datocms.com/", {

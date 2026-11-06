@@ -33,10 +33,10 @@ export async function generateMetadata(): Promise<Metadata> {
     description: fallbackSeo?.description,
     robots: defaultRobots,
     alternates: {
-      canonical: `${siteUrl}/en/`,
+      canonical: `${siteUrl}/en`,
       languages: {
         it: `${siteUrl}/`,
-        en: `${siteUrl}/en/`,
+        en: `${siteUrl}/en`,
         "x-default": `${siteUrl}/`,
       },
     },
@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: fallbackSeo?.description || undefined,
       siteName: globalSeo?.siteName || undefined,
       images: fallbackSeo?.image?.url ? [fallbackSeo.image.url] : undefined,
-      url: `${siteUrl}/en/`,
+      url: `${siteUrl}/en`,
       locale,
       type: "website",
     },

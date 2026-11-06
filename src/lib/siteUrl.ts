@@ -16,7 +16,8 @@ export const deployContext = process.env.CONTEXT || "production";
 export const isIndexableDeploy = deployContext === "production";
 
 export function absoluteUrl(path: string): string {
-  if (!path) return `${siteUrl}/`;
+  if (!path || path === "/") return `${siteUrl}/`;
   if (/^https?:\/\//.test(path)) return path;
-  return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
+  const withLeadingSlash = path.startsWith("/") ? path : `/${path}`;
+  return `${siteUrl}${withLeadingSlash.replace(/\/+$/, "")}`;
 }
