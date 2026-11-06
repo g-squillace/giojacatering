@@ -20,8 +20,7 @@ export default function MenuFooter({ data, logo, locale }: Props) {
         <Image
           src={logo}
           fill
-          alt="Logo Forte dei Marmi"
-          title="Logo Forte dei Marmi"
+          alt="GioJa Catering"
           className="object-left object-contain"
         />
       </div>

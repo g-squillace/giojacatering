@@ -15,7 +15,7 @@ export default function Socials({ socials, locale }: PropsSocials) {
           <ExternalLink
             url={s.url}
             locale={locale}
-            title={s.title}
+            title={s.name}
             key={s.id}
             className="group"
           >
@@ -24,7 +24,8 @@ export default function Socials({ socials, locale }: PropsSocials) {
                 src={s.icon.url}
                 width={25}
                 height={25}
-                alt="Picture of the author"
+                alt=""
+                aria-hidden="true"
                 className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto"
               />
             </div>

@@ -15,6 +15,7 @@ import resolveLink from "@/lib/resolveLink";
 import { motion } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import ButtonMenu from "./ButtonMenu";
+import isModifiedClick from "@/lib/isModifiedClick";
 
 import { useRouter } from "next/navigation";
 import { animatePageOut } from "../../../animations";
@@ -65,15 +66,22 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
     }
   }, [navbarOpen]);
 
-  const handleClick = (item: any) => {
+  const handleClick = (item: string) => {
     if (item !== pathname) {
       animatePageOut(item, router);
     }
   };
-  const handleClickMenu = (item: any) => {
+  const handleClickMenu = (item: string) => {
     handleClick(item);
     handleClickAndClose;
   };
+
+  const handleNavigate =
+    (item: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+      if (isModifiedClick(event)) return;
+      event.preventDefault();
+      handleClickMenu(item);
+    };
 
   const handleClickAndClose = () => {
     setNavbarOpen(false);
@@ -133,7 +141,9 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
           className={`${
             pathname === item.path ? activeClass : ""
           } ${itemClass} cursor-pointer`}
-          onClick={() => handleClickMenu(item.path)}
+          href={item.path}
+          aria-current={pathname === item.path ? "page" : undefined}
+          onClick={handleNavigate(item.path)}
         >
           {item.title}
         </a>
@@ -181,7 +191,8 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                 >
                   <a
                     className="block w-full h-full relative cursor-pointer"
-                    onClick={() => handleClickMenu("/")}
+                    href={lng === "it" ? "/" : `/${lng}/`}
+                    onClick={handleNavigate(lng === "it" ? "/" : `/${lng}/`)}
                   >
                     <Image
                       src={
@@ -189,7 +200,7 @@ const Header = ({ lng, hrefs, data, layout }: Props) => {
                           ? data.layout.logoAlt.url
                           : data.layout.logoDark.url
                       }
-                      alt="logo"
+                      alt="GioJa Catering"
                       className="w-full h-full absolute inset-0 object-center object-contain"
                       priority
                       width={100}

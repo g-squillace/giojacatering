@@ -1,66 +1,120 @@
+import type { Metadata } from "next";
 import { toNextMetadata } from "react-datocms";
 import { LocaleValue, PageSeoProps } from "@/_types";
 import resolveLink from "@/lib/resolveLink";
 import config from "@/data/config";
+import { absoluteUrl, isIndexableDeploy, siteUrl } from "@/lib/siteUrl";
 
-const HOST = process.env.HOST;
+type AlternateEntry = {
+  locale: string;
+  path: string;
+};
+
+const DATOCMS_PLACEHOLDER_TWITTER_ACCOUNT = "@datocms";
+
+function withoutPlaceholderTwitterAccount(
+  twitter: Metadata["twitter"]
+): Metadata["twitter"] {
+  if (!twitter || !("site" in twitter)) return twitter;
+  if (twitter.site?.toLowerCase() !== DATOCMS_PLACEHOLDER_TWITTER_ACCOUNT) {
+    return twitter;
+  }
+  return { ...twitter, site: undefined, siteId: undefined };
+}
+
+export const noIndexRobots: Metadata["robots"] = {
+  index: false,
+  follow: false,
+  googleBot: { index: false, follow: false },
+};
+
+export const indexableRobots: Metadata["robots"] = {
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    "max-video-preview": -1,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+  },
+};
+
+export const defaultRobots: Metadata["robots"] = isIndexableDeploy
+  ? indexableRobots
+  : noIndexRobots;
+
+export function getAlternateEntries(page: PageSeoProps): AlternateEntry[] {
+  if (!page?.slugs) return [];
+  return page.slugs
+    .filter((item: LocaleValue) => Boolean(item?.value))
+    .map((item: LocaleValue) => ({
+      locale: item.locale,
+      path: resolveLink({
+        slugs: page.slugs,
+        _modelApiKey: page._modelApiKey || "",
+        locale: item.locale,
+        modelRelated: null,
+      }),
+    }));
+}
 
 export function getAlts(page: PageSeoProps) {
   if (!page) return [];
-  const alts = page?.slugs?.map((item: LocaleValue) => {
-    const { locale } = item;
-    const _modelApiKey = page?._modelApiKey || "";
-    return { slugs: page?.slugs, locale, _modelApiKey };
-  });
-  return alts;
+  return (page?.slugs || []).map((item: LocaleValue) => ({
+    slugs: page?.slugs,
+    locale: item.locale,
+    _modelApiKey: page?._modelApiKey || "",
+  }));
 }
 
-export default function getSeoMeta(page: PageSeoProps, currentLocale: string) {
+export function buildAlternates(
+  page: PageSeoProps,
+  currentLocale: string
+): Metadata["alternates"] {
+  const entries = getAlternateEntries(page);
+  if (entries.length === 0) return { canonical: siteUrl };
+
+  const languages: Record<string, string> = {};
+  entries.forEach((entry) => {
+    languages[entry.locale] = absoluteUrl(entry.path);
+    if (entry.locale === config.defaultLocale) {
+      languages["x-default"] = absoluteUrl(entry.path);
+    }
+  });
+
+  const current =
+    entries.find((entry) => entry.locale === currentLocale) || entries[0];
+
+  return {
+    canonical: absoluteUrl(current.path),
+    languages,
+  };
+}
+
+export default function getSeoMeta(
+  page: PageSeoProps,
+  currentLocale: string
+): Metadata | null {
   if (!page) return null;
 
-  const tags = page?.seo || [];
-  const alts = getAlts(page);
+  const nextTags = toNextMetadata([...(page?.seo || [])]);
+  const alternates = buildAlternates(page, currentLocale);
+  const canonical = alternates && "canonical" in alternates
+    ? alternates.canonical
+    : undefined;
 
-  const nextTags = toNextMetadata(tags || []);
-  const dl = config.defaultLocale;
-
-  const alternates = alts?.reduce((obj: any, alt: any) => {
-    const path = resolveLink(alt);
-    const url = `${HOST}${path}`;
-    const { locale } = alt;
-    let languages = obj.languages || {};
-
-    //ADD language to ALTERNATES
-    obj = {
-      ...obj,
-      languages: {
-        ...languages,
-        [locale]: url,
-      },
-    };
-    languages = obj.languages || {};
-
-    //X-DEFAULT
-    if (dl === locale) {
-      obj = {
-        ...obj,
-        languages: {
-          ...languages,
-          ["x-default"]: url,
-        },
-      };
-    }
-    //CANONICAL
-    if (currentLocale === locale) {
-      obj = {
-        ...obj,
-        canonical: url,
-      };
-    }
-
-    return obj;
-  }, {});
-  const meta = { ...nextTags, alternates };
-  // console.log(meta);
-  return meta;
+  return {
+    ...nextTags,
+    metadataBase: new URL(siteUrl),
+    alternates,
+    robots: defaultRobots,
+    twitter: withoutPlaceholderTwitterAccount(nextTags.twitter),
+    openGraph: {
+      ...nextTags.openGraph,
+      url: typeof canonical === "string" ? canonical : siteUrl,
+      locale: currentLocale,
+      type: page._modelApiKey === "page" ? "website" : "article",
+    },
+  };
 }

@@ -1,0 +1,25 @@
+export const business = {
+  legalName: "GioJa Catering",
+  name: "GioJa Catering",
+  vatId: "IT01538970524",
+  streetAddress: "Strada di Busseto 18",
+  addressLocality: "Siena",
+  addressRegion: "SI",
+  postalCode: "53100",
+  addressCountry: "IT",
+  priceRange: "€€€",
+  servesCuisine: ["Italiana", "Toscana"],
+  areaServed: [
+    "Siena",
+    "Provincia di Siena",
+    "Val d'Orcia",
+    "Chianti",
+    "Toscana",
+  ],
+  services: [
+    "Catering per matrimoni",
+    "Catering per eventi aziendali",
+    "Catering per eventi privati",
+    "Banqueting e cene di gala",
+  ],
+} as const;

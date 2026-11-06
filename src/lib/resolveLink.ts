@@ -1,15 +1,15 @@
 import config from "@/data/config";
 
+export type SlugLocale = {
+  locale?: string | null;
+  value?: string | null;
+};
+
 type RouteProps = {
   _modelApiKey: string;
   locale: string;
-  slugs?: [
-    {
-      locale: string;
-      value: string;
-    },
-  ];
-  modelRelated: string | null;
+  slugs?: readonly SlugLocale[] | null;
+  modelRelated?: string | null;
 };
 
 export function t(section: string, locale: string) {
@@ -58,6 +58,8 @@ export default function resolveLink({
     }
   }
 
+  if (!slug) return `${lang}/`;
+
   switch (_modelApiKey) {
     case "page":
       if (slug === "home") {
@@ -76,6 +78,6 @@ export default function resolveLink({
           return `${lang}/${t(`eventi`, locale)}/c/${slug.toLowerCase()}`;
       }
     default:
-      return `${lang}/${slug ? slug : ""}`;
+      return `${lang}/${slug}`;
   }
 }

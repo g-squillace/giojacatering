@@ -7,6 +7,9 @@ import getSeoMeta from "@/lib/seoUtils";
 import { pickHrefs } from "@/lib/pickPageData";
 import { hrefsProp } from "@/_types";
 import Wrapper from "@/components/Layout/Wrapper";
+import JsonLd from "@/components/Seo/JsonLd";
+import resolveLink from "@/lib/resolveLink";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/lib/structuredData";
 
 type Params = {
   params: {
@@ -40,13 +43,37 @@ export default async function Page({ params: { slug } }: Params) {
     },
     isEnabled
   );
-  if (!data) notFound();
+  if (!data?.post) notFound();
 
   const hrefs: hrefsProp = pickHrefs(data.post);
+  const path = resolveLink({
+    slugs: data.post.slugs,
+    _modelApiKey: data.post._modelApiKey,
+    locale,
+  });
 
   return (
     <Wrapper hrefs={hrefs} locale={locale}>
       <PostPage data={data} locale={siteLocale} />
+      <JsonLd
+        id="article-jsonld"
+        data={buildArticleJsonLd({
+          title: data.post.title || "",
+          description: data.post.abstract,
+          imageUrl: data.post.blogImage?.responsiveImage?.src,
+          publishedAt: data.post._publishedAt,
+          updatedAt: data.post.date,
+          path,
+          locale,
+        })}
+      />
+      <JsonLd
+        id="breadcrumb-jsonld"
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/en/" },
+          { name: data.post.title || "", path },
+        ])}
+      />
     </Wrapper>
   );
 }

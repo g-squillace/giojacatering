@@ -1,17 +1,21 @@
 "use client";
 
-import Link from "next/link";
+import type { MouseEvent, ReactNode } from "react";
 import resolveLink from "@/lib/resolveLink";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { animatePageOut } from "../../../animations";
-import { usePathname } from "next/navigation";
+import isModifiedClick from "@/lib/isModifiedClick";
 
 type InternalinkProps = {
-  record: any;
+  record: {
+    slugs?: { locale: string; value: string | null }[] | null;
+    _modelApiKey: string;
+    title?: string | null;
+  };
   locale: string;
-  children?: any;
+  children?: ReactNode;
   title?: string;
-  className?: any;
+  className?: string;
 };
 
 export default function InternalLink({
@@ -22,24 +26,23 @@ export default function InternalLink({
   children,
 }: InternalinkProps) {
   const router = useRouter();
-  const path = usePathname();
+  const pathname = usePathname();
+  const href = resolveLink({ ...record, locale });
 
-  const handleClick = () => {
-    if (resolveLink({ ...record, locale }) !== path) {
-      animatePageOut(resolveLink({ ...record, locale }), router);
-    }
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (isModifiedClick(event)) return;
+    event.preventDefault();
+    if (href !== pathname) animatePageOut(href, router);
   };
 
   return (
-    <>
-      <a
-        className={`${className} cursor-pointer`}
-        // href={resolveLink({ ...record, locale })}
-        title={`${title ? title : record.title}`}
-        onClick={handleClick}
-      >
-        {children}
-      </a>
-    </>
+    <a
+      className={`${className} cursor-pointer`}
+      href={href}
+      title={title || record.title || undefined}
+      onClick={handleClick}
+    >
+      {children}
+    </a>
   );
 }

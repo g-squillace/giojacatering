@@ -1,0 +1,21 @@
+query Sitemap {
+  allPages(first: "100") {
+    id
+    _modelApiKey
+    _updatedAt
+    isHome
+    slugs: _allSlugLocales {
+      locale
+      value
+    }
+  }
+  allPosts(first: "100", filter: { title: { isBlank: "false" } }) {
+    id
+    _modelApiKey
+    _updatedAt
+    slugs: _allSlugLocales {
+      locale
+      value
+    }
+  }
+}

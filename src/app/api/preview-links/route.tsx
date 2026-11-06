@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import resolveLink from "@/lib/resolveLink";
+import { siteUrl } from "@/lib/siteUrl";
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const baseUrl = process.env.HOST || "";
+  const baseUrl = siteUrl;
   const previewLinks = [];
 
   previewLinks.push({

@@ -11,6 +11,9 @@ query Event(
     _publishedAt
     _modelApiKey
     date: _createdAt
+    seo: _seoMetaTags {
+      ...seoMetaFragment
+    }
     dateStartEvent
     dateEndEvent
     title

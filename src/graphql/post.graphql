@@ -7,6 +7,9 @@ query Post($slug: String, $locale: SiteLocale, $fallbackLocale: [SiteLocale!]) {
     _publishedAt
     _modelApiKey
     date
+    seo: _seoMetaTags {
+      ...seoMetaFragment
+    }
     title
     abstract
     blogImage {

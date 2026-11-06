@@ -10,7 +10,6 @@
     "lint": "next lint",
     "fix": "node ./scripts/fix.mjs",
     "locales": "zx ./scripts/locales.mjs",
-    "sitemap": "zx ./scripts/sitemap.mjs",
     "parse": "ts-node ./scripts/parseSiteStructure.ts",
     "routes": "zx ./scripts/genRouteFiles.mjs",
     "codegen": "graphql-codegen --config codegen.ts && bun run fix",

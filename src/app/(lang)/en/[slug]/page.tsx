@@ -8,6 +8,9 @@ import config from "@/data/config";
 import { pickHrefs } from "@/lib/pickPageData";
 import { hrefsProp } from "@/_types";
 import Wrapper from "@/components/Layout/Wrapper";
+import JsonLd from "@/components/Seo/JsonLd";
+import resolveLink from "@/lib/resolveLink";
+import { buildBreadcrumbJsonLd } from "@/lib/structuredData";
 
 type Params = {
   params: {
@@ -49,10 +52,22 @@ export default async function Page({ params: { slug } }: Params) {
   if (!data?.page) notFound();
 
   const hrefs: hrefsProp = pickHrefs(data.page);
+  const path = resolveLink({
+    slugs: data.page.slugs,
+    _modelApiKey: data.page._modelApiKey,
+    locale,
+  });
 
   return (
     <Wrapper hrefs={hrefs} locale={locale}>
       <GenericPage data={data} page={data.page} locale={siteLocale} />
+      <JsonLd
+        id="breadcrumb-jsonld"
+        data={buildBreadcrumbJsonLd([
+          { name: "Home", path: "/en/" },
+          { name: data.page.label || "", path },
+        ])}
+      />
     </Wrapper>
   );
 }

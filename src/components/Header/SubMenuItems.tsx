@@ -5,6 +5,7 @@ import { SRCImage } from "react-datocms";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import CustomIcon from "../Blocks/CustomIcon";
+import isModifiedClick from "@/lib/isModifiedClick";
 
 export const MenuItem = ({
   submenuItem,
@@ -51,11 +52,16 @@ export const MenuItem = ({
     <li>
       <a
         tabIndex={dropdownOpen ? 0 : -1}
-        // href={submenuItem.path}
+        href={submenuItem.path}
+        aria-current={pathname === submenuItem.path ? "page" : undefined}
         className={`${
           pathname === submenuItem.path ? "text-accent activeClass" : ""
         } group`}
-        onClick={() => handleClickAndClose(submenuItem.path)}
+        onClick={(event) => {
+          if (isModifiedClick(event)) return;
+          event.preventDefault();
+          handleClickAndClose(submenuItem.path);
+        }}
       >
         {submenuItem.menuImage && isMega && (
           <div className="relative block text-sm text-primary-content aspect-[4/3] bg-base-300/20 w-full overflow-hidden">

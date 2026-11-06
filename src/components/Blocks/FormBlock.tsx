@@ -50,7 +50,8 @@ const FormBlock = ({ data, locale }: PropsFormBlock) => {
                   src="assets/pin.svg"
                   width="20"
                   height="20"
-                  alt="pin"
+                  alt=""
+                  aria-hidden="true"
                   className="size-10"
                 />
                 <div className="">
@@ -67,7 +68,8 @@ const FormBlock = ({ data, locale }: PropsFormBlock) => {
                   src="assets/mail.svg"
                   width="20"
                   height="20"
-                  alt="mail"
+                  alt=""
+                  aria-hidden="true"
                   className="size-9"
                 />
                 <div className="">

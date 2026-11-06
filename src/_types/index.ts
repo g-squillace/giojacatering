@@ -1,4 +1,5 @@
 import { SeoMetaFragmentFragment, Site } from "@/graphql/generated";
+import type { SlugLocale } from "@/lib/resolveLink";
 
 export type hrefsProp = {
   [k: string]: string;
@@ -102,10 +103,7 @@ export type SeoProps = {
   alts?: AltType[];
 };
 
-export type LocaleValue = {
-  locale: string;
-  value: string;
-};
+export type LocaleValue = SlugLocale;
 
 export type AltsProps = {
   slugs?: LocaleValue[];
@@ -116,9 +114,9 @@ export type AltsProps = {
 
 export type PageSeoProps = {
   _modelApiKey?: string;
-  seo?: SeoMetaFragmentFragment[];
-  titles?: LocaleValue[];
-  slugs?: LocaleValue[];
+  seo?: readonly SeoMetaFragmentFragment[];
+  titles?: readonly LocaleValue[];
+  slugs?: readonly LocaleValue[];
   section?: string;
   sections?: any;
   content?: any;

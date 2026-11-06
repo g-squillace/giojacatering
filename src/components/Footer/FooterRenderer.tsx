@@ -52,7 +52,7 @@ const Footer = ({ data, lng }: Props) => {
                 <span className="px-1 xl:px-0 hidden xl:block"> - </span>
                 <div className="">
                   <ExternalLink
-                    url="https//www.guidosquillace.it"
+                    url="https://www.guidosquillace.it"
                     title="Web designer web developer Guido Squillace info@guidosquillace.it"
                     locale={lng}
                     className="hover:underline hover:underline-offset-4"

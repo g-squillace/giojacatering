@@ -13,17 +13,8 @@ type Props = {
 };
 
 const EventPage = ({ data, locale }: Props) => {
-  const {
-    tags,
-    date,
-    title,
-    abstract,
-    eventImage,
-    dateEndEvent,
-    dateStartEvent,
-  } = data.event;
   if (!data.event) notFound();
-  return;
+  const { tags, title, abstract, eventImage } = data.event;
   return (
     <section className="">
       <div className="">
