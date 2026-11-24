@@ -44,9 +44,9 @@ export default async function LoginPage({
       {error !== null && (
         <p
           role="alert"
-          className="mt-6 border-l-4 border-error bg-white px-4 py-3 text-sm"
+          className="mt-6 border border-error bg-white px-4 py-3 text-sm leading-relaxed"
         >
-          {error}
+          <strong className="font-semibold">Non sono entrato.</strong> {error}
         </p>
       )}
 

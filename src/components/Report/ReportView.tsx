@@ -484,13 +484,14 @@ export default function ReportView({
       {demo && (
         <p
           role="status"
-          className="mt-6 border-l-4 border-warning bg-white px-4 py-3 text-sm leading-relaxed"
+          className="mt-6 border border-primary-content bg-white px-4 py-3 text-sm leading-relaxed"
         >
+          <strong className="font-semibold">Dati di esempio.</strong>{" "}
           {role === "agency"
             ? (report.analyticsSource.message ??
               report.searchSource.message ??
-              "Dati di esempio.")
-            : "Questi sono numeri di esempio: il collegamento con Google non è ancora attivo."}
+              "Il collegamento con Google non è ancora attivo.")
+            : "Il collegamento con Google non è ancora attivo, quindi questi numeri non sono i vostri."}
         </p>
       )}
 
