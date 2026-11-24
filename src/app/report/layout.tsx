@@ -14,7 +14,7 @@ export default function ReportLayout({
 }) {
   return (
     <html lang="it" data-theme="custom">
-      <body className="min-h-screen bg-secondary text-primary-content antialiased">
+      <body className="min-h-screen bg-secondary text-primary-content antialiased selection:bg-accent selection:text-accent-content">
         {children}
       </body>
     </html>

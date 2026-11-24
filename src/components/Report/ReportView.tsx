@@ -22,6 +22,14 @@ const SECTION_TITLE = "font-serif text-lg";
 const PREFIX =
   "text-xs font-semibold uppercase tracking-widest text-primary-content";
 const TABLE_CELL = "border-b border-primary-content/15 py-2 pr-4 text-left";
+const NUM_CELL = `${TABLE_CELL} tabular-nums lining-nums`;
+
+function agencySourceNote(report: SiteReport): string | null {
+  const raw =
+    report.analyticsSource.message ?? report.searchSource.message ?? null;
+  if (raw === null) return null;
+  return raw.replace(/^Dati di esempio:\s*/i, "");
+}
 
 function Delta({
   pair,
@@ -69,17 +77,19 @@ function Tile({
   lowerIsBetter?: boolean;
 }) {
   return (
-    <div className={CARD}>
+    <div className={`${CARD} flex flex-col`}>
       <dt className={PREFIX}>{label}</dt>
-      <dd className="mt-2">
-        <span className="font-serif text-2xl leading-none">{value}</span>
-        {pair !== undefined && (
-          <span className="ml-3 inline-block align-middle">
-            <Delta pair={pair} lowerIsBetter={lowerIsBetter} />
+      <dd className="mt-3 flex flex-1 flex-col">
+        <span className="flex flex-wrap items-baseline gap-x-3">
+          <span className="font-serif text-2xl leading-none tabular-nums lining-nums">
+            {value}
           </span>
-        )}
+          {pair !== undefined && (
+            <Delta pair={pair} lowerIsBetter={lowerIsBetter} />
+          )}
+        </span>
         {note !== undefined && (
-          <span className="mt-2 block text-xs leading-relaxed">{note}</span>
+          <span className="mt-auto pt-3 text-xs leading-relaxed">{note}</span>
         )}
       </dd>
     </div>
@@ -142,9 +152,9 @@ function WeeklyChart({ report }: { report: SiteReport }) {
                 <th scope="row" className={`${TABLE_CELL} font-normal`}>
                   {point.label}
                 </th>
-                <td className={TABLE_CELL}>{formatNumber(point.impressions)}</td>
-                <td className={TABLE_CELL}>{formatNumber(point.clicks)}</td>
-                <td className={TABLE_CELL}>{formatNumber(point.sessions)}</td>
+                <td className={NUM_CELL}>{formatNumber(point.impressions)}</td>
+                <td className={NUM_CELL}>{formatNumber(point.clicks)}</td>
+                <td className={NUM_CELL}>{formatNumber(point.sessions)}</td>
               </tr>
             ))}
           </tbody>
@@ -186,9 +196,9 @@ function QueryTable({
             <th scope="row" className={`${TABLE_CELL} font-normal`}>
               {row.query}
             </th>
-            <td className={TABLE_CELL}>{formatNumber(row.impressions)}</td>
-            <td className={TABLE_CELL}>{formatNumber(row.clicks)}</td>
-            <td className={TABLE_CELL}>{formatDecimal(row.position, 1)}</td>
+            <td className={NUM_CELL}>{formatNumber(row.impressions)}</td>
+            <td className={NUM_CELL}>{formatNumber(row.clicks)}</td>
+            <td className={NUM_CELL}>{formatDecimal(row.position, 1)}</td>
           </tr>
         ))}
       </tbody>
@@ -208,26 +218,37 @@ function OpportunityList({
   id: string;
 }) {
   if (items.length === 0) return null;
+  const shown = items.slice(0, 6);
+  const rest = items.length - shown.length;
   return (
-    <section className="mt-10" aria-labelledby={id}>
+    <section className="mt-14" aria-labelledby={id}>
       <h2 id={id} className={SECTION_TITLE}>
         {title}
       </h2>
-      <p className="mt-2 max-w-prose text-sm leading-relaxed">{intro}</p>
-      <ul className="mt-5 flex flex-col gap-3">
-        {items.map((item) => (
-          <li key={item.query} className={CARD}>
-            <p className="font-semibold">{item.query}</p>
-            <p className="mt-1 text-sm">
-              {formatNumber(item.impressions)} viste,{" "}
-              {formatNumber(item.clicks)} clic, posizione media{" "}
-              {formatDecimal(item.position, 1)}
-            </p>
-            <p className="mt-2 text-sm leading-relaxed">{item.reason}</p>
-            <p className="mt-2 text-sm leading-relaxed">{item.action}</p>
+      <p className="mt-3 max-w-prose text-sm leading-relaxed">{intro}</p>
+      <ul className="mt-6 bg-white px-5 lg:px-6">
+        {shown.map((item) => (
+          <li
+            key={item.query}
+            className="border-b border-primary-content/15 py-5 last:border-b-0"
+          >
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+              <p className="font-semibold">{item.query}</p>
+              <p className="text-sm tabular-nums lining-nums">
+                {formatNumber(item.impressions)} viste ·{" "}
+                {formatNumber(item.clicks)} clic · posizione{" "}
+                {formatDecimal(item.position, 1)}
+              </p>
+            </div>
           </li>
         ))}
       </ul>
+      {rest > 0 && (
+        <p className="mt-3 text-xs lining-nums">
+          Altre {formatNumber(rest)} ricerche nella stessa condizione: le trovate
+          in fondo, nella tabella di tutte le ricerche.
+        </p>
+      )}
     </section>
   );
 }
@@ -341,31 +362,31 @@ function UpsellCard({
   const [copied, setCopied] = useState(false);
   return (
     <li className={CARD}>
-      <p className={PREFIX}>{signal.service}</p>
-      <p className="mt-2 text-sm">
+      <h3 className={PREFIX}>{signal.service}</h3>
+      <p className="mt-2 text-sm tabular-nums lining-nums">
         {formatNumber(signal.impressions)} viste e{" "}
         {formatNumber(signal.clicks)} clic su questo tema, posizione media{" "}
         {formatDecimal(signal.position, 1)}
       </p>
       <p className="mt-3 max-w-prose text-sm leading-relaxed">{signal.pitch}</p>
 
-      <h3 className="mt-5 text-sm font-semibold">Cosa propongo</h3>
+      <h4 className="mt-5 text-sm font-semibold">Cosa propongo</h4>
       <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed">
         {signal.solution.map((step) => (
           <li key={step}>{step}</li>
         ))}
       </ul>
 
-      <h3 className="mt-4 text-sm font-semibold">Cosa serve da voi</h3>
+      <h4 className="mt-4 text-sm font-semibold">Cosa serve da voi</h4>
       <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed">
         {signal.needed.map((step) => (
           <li key={step}>{step}</li>
         ))}
       </ul>
 
-      <h3 className="mt-4 text-sm font-semibold">
+      <h4 className="mt-4 text-sm font-semibold">
         Come capiamo se ha funzionato
-      </h3>
+      </h4>
       <p className="mt-2 max-w-prose text-sm leading-relaxed">{signal.goal}</p>
 
       <details className="mt-4">
@@ -387,8 +408,10 @@ function UpsellCard({
       />
 
       {role === "agency" && signal.prompt !== "" && (
-        <div className="mt-6 border-t border-primary-content/20 pt-4">
-          <p className={PREFIX}>Prompt da lanciare nel repository</p>
+        <details className="mt-6 border-t border-primary-content/20 pt-4">
+          <summary className="cursor-pointer text-sm font-semibold underline underline-offset-4">
+            Prompt da lanciare nel repository
+          </summary>
           <button
             type="button"
             onClick={() => {
@@ -397,14 +420,14 @@ function UpsellCard({
                 .then(() => setCopied(true))
                 .catch(() => setCopied(false));
             }}
-            className="mt-2 min-h-[44px] border border-primary-content px-4 text-sm font-semibold focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="mt-3 min-h-[44px] border border-primary-content px-4 text-sm font-semibold focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {copied ? "Copiato" : "Copia il prompt"}
           </button>
           <pre className="mt-3 overflow-x-auto whitespace-pre-wrap bg-secondary p-4 text-xs leading-relaxed">
             {signal.prompt}
           </pre>
-        </div>
+        </details>
       )}
     </li>
   );
@@ -428,12 +451,13 @@ export default function ReportView({
     report.searchSource.status !== "live";
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-6 py-10 lg:py-16">
+    <main className="mx-auto w-full max-w-5xl px-6 py-10 lg:py-16 3xl:max-w-[88rem]">
       <header className="flex flex-wrap items-start justify-between gap-6">
         <div>
-          <p className={PREFIX}>{REPORT.siteName}</p>
-          <h1 className="mt-2 font-serif text-xl">Andamento del sito</h1>
-          <p className="mt-2 text-sm">
+          <h1 className="font-serif text-xl">
+            {REPORT.siteName}, andamento del sito
+          </h1>
+          <p className="mt-2 text-sm tabular-nums lining-nums">
             {report.period.label} · {report.period.weeks} settimane complete
           </p>
         </div>
@@ -488,14 +512,13 @@ export default function ReportView({
         >
           <strong className="font-semibold">Dati di esempio.</strong>{" "}
           {role === "agency"
-            ? (report.analyticsSource.message ??
-              report.searchSource.message ??
+            ? (agencySourceNote(report) ??
               "Il collegamento con Google non è ancora attivo.")
             : "Il collegamento con Google non è ancora attivo, quindi questi numeri non sono i vostri."}
         </p>
       )}
 
-      <p className="mt-8 max-w-prose font-serif text-md leading-snug">
+      <p className="mt-8 max-w-prose font-serif text-md leading-snug lining-nums">
         {report.headline}
       </p>
 
@@ -571,7 +594,7 @@ export default function ReportView({
           <h2 id="domanda" className={SECTION_TITLE}>
             La domanda che non state intercettando
           </h2>
-          <p className="mt-2 max-w-prose text-sm leading-relaxed">
+          <p className="mt-2 max-w-prose text-sm leading-relaxed lining-nums">
             Sommando tutte le ricerche di chi cerca un catering senza conoscervi:{" "}
             {formatNumber(report.demandGap.impressions)} viste e{" "}
             {formatNumber(report.demandGap.clicks)} clic, posizione media{" "}
@@ -614,14 +637,14 @@ export default function ReportView({
         id="a-un-passo"
         items={report.opportunities}
         title="Dove siete a un passo"
-        intro="Ricerche in cui Google vi mostra già ma troppo in basso perché qualcuno clicchi. Sono le più economiche da recuperare."
+        intro="Ricerche in cui Google vi mostra già ma troppo in basso perché qualcuno clicchi. Sono le più economiche da recuperare: si rinforza la pagina che già si posiziona, con un titolo più vicino alla ricerca e un paragrafo che risponda esattamente a quella domanda."
       />
 
       <OpportunityList
         id="oltre-seconda-pagina"
         items={report.invisible}
         title="Oltre la seconda pagina"
-        intro="Google vi considera pertinenti ma nessuno vi vede. Qui serve contenuto nuovo, non una limatura."
+        intro="Google vi considera pertinenti ma nessuno vi vede. Qui serve contenuto nuovo, non una limatura: una pagina che tratti solo quell'argomento."
       />
 
       {report.portfolioOpportunities.length > 0 && (
@@ -654,7 +677,7 @@ export default function ReportView({
           Da dove arrivano le visite
         </h2>
         <div className={CARD}>
-          <p className={PREFIX}>Da dove arrivano</p>
+          <h3 className={PREFIX}>Da dove arrivano</h3>
           <table className="mt-3 w-full text-sm">
             <caption className="sr-only">Visite per canale</caption>
             <thead>
@@ -676,15 +699,15 @@ export default function ReportView({
                   <th scope="row" className={`${TABLE_CELL} font-normal`}>
                     {row.label}
                   </th>
-                  <td className={TABLE_CELL}>{formatNumber(row.value)}</td>
-                  <td className={TABLE_CELL}>{formatPercent(row.share, 0)}</td>
+                  <td className={NUM_CELL}>{formatNumber(row.value)}</td>
+                  <td className={NUM_CELL}>{formatPercent(row.share, 0)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <div className={CARD}>
-          <p className={PREFIX}>Assistenti AI</p>
+          <h3 className={PREFIX}>Assistenti AI</h3>
           <p className="mt-2 text-sm leading-relaxed">
             Quante visite arrivano da ChatGPT e simili. Sono numeri piccoli per
             tutti: conta se crescono di mese in mese, non quanti sono oggi.
@@ -707,7 +730,7 @@ export default function ReportView({
                   <th scope="row" className={`${TABLE_CELL} font-normal`}>
                     {row.label}
                   </th>
-                  <td className={TABLE_CELL}>{formatNumber(row.value)}</td>
+                  <td className={NUM_CELL}>{formatNumber(row.value)}</td>
                 </tr>
               ))}
             </tbody>
@@ -741,8 +764,8 @@ export default function ReportView({
                   <th scope="row" className={`${TABLE_CELL} font-normal`}>
                     {row.path}
                   </th>
-                  <td className={TABLE_CELL}>{formatNumber(row.views)}</td>
-                  <td className={TABLE_CELL}>{formatNumber(row.sessions)}</td>
+                  <td className={NUM_CELL}>{formatNumber(row.views)}</td>
+                  <td className={NUM_CELL}>{formatNumber(row.sessions)}</td>
                 </tr>
               ))}
             </tbody>
@@ -760,7 +783,7 @@ export default function ReportView({
             caption="Ricerche con cui il sito è comparso su Google"
           />
         </div>
-        <p className="mt-3 max-w-prose text-xs leading-relaxed">
+        <p className="mt-3 max-w-prose text-xs leading-relaxed lining-nums">
           La somma di questa tabella è sempre minore dei totali in cima: Google
           nasconde le ricerche fatte da poche persone per non renderle
           identificabili. Qui sono visibili{" "}
@@ -774,7 +797,7 @@ export default function ReportView({
           <h2 id="ore" className={SECTION_TITLE}>
             Ore di assistenza
           </h2>
-          <p className="mt-2 text-sm">
+          <p className="mt-2 text-sm lining-nums">
             {formatDecimal(report.support.remainingHours, 1)} ore residue su{" "}
             {formatDecimal(report.support.totalHours, 1)}, pacchetto aperto il{" "}
             {formatDate(report.support.startedOn)}.

@@ -19,7 +19,7 @@ const ERRORS: Record<string, string> = {
 };
 
 const FIELD_CLASS =
-  "min-h-[44px] border border-primary-content/40 bg-white px-3 text-base focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "min-h-[44px] border border-primary-content/40 bg-white px-3 text-base caret-accent focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 export default async function LoginPage({
   searchParams,
