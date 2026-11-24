@@ -40,7 +40,7 @@ function Delta({
 }) {
   const change = delta(pair.current, pair.previous, lowerIsBetter);
   const arrow =
-    change.direction === "flat" ? "→" : change.ratio === null ? "★" : "";
+    change.direction === "new" ? "★" : change.ratio === null ? "→" : "";
   const sign = change.ratio === null ? "" : change.ratio > 0 ? "↑" : "↓";
   const tone =
     change.direction === "up"
@@ -57,7 +57,9 @@ function Delta({
           ? " in miglioramento"
           : change.direction === "down"
             ? " in peggioramento"
-            : " stabile"}
+            : change.direction === "new"
+              ? " primo periodo con questo dato"
+              : " stabile"}
       </span>
     </span>
   );
@@ -450,6 +452,9 @@ export default function ReportView({
     report.analyticsSource.status !== "live" ||
     report.searchSource.status !== "live";
 
+  const comparableTraffic = (pair: MetricPair): MetricPair | undefined =>
+    report.traffic.comparable ? pair : undefined;
+
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-10 lg:py-16 3xl:max-w-[88rem]">
       <header className="flex flex-wrap items-start justify-between gap-6">
@@ -527,14 +532,14 @@ export default function ReportView({
           <Tile
             label="Richieste di contatto"
             value={formatNumber(report.leads.total.current)}
-            pair={report.leads.total}
+            pair={comparableTraffic(report.leads.total)}
             note="Clic su email, telefono e WhatsApp, più i form inviati."
           />
         )}
         <Tile
           label="Visite"
           value={formatNumber(report.traffic.sessions.current)}
-          pair={report.traffic.sessions}
+          pair={comparableTraffic(report.traffic.sessions)}
         />
         <Tile
           label="Viste su Google"
@@ -556,12 +561,12 @@ export default function ReportView({
         <Tile
           label="Pagine viste"
           value={formatNumber(report.traffic.pageViews.current)}
-          pair={report.traffic.pageViews}
+          pair={comparableTraffic(report.traffic.pageViews)}
         />
         <Tile
           label="Tempo medio sul sito"
           value={formatDuration(report.traffic.averageSessionSeconds.current)}
-          pair={report.traffic.averageSessionSeconds}
+          pair={comparableTraffic(report.traffic.averageSessionSeconds)}
         />
         <Tile
           label="Clic sul vostro nome"
@@ -571,6 +576,17 @@ export default function ReportView({
           )} clic arrivano da chi non vi cercava per nome.`}
         />
       </dl>
+
+      {!report.traffic.comparable && report.traffic.measurementStart !== null && (
+        <p className="mt-3 max-w-prose text-xs leading-relaxed">
+          Le visite sono misurate da Google Analytics a partire dal{" "}
+          {formatDate(report.traffic.measurementStart)}: prima di quella data
+          non esistono numeri, quindi le visite, le pagine viste e il tempo sul
+          sito non hanno ancora un periodo precedente da confrontare. Le viste e
+          i clic su Google vengono invece da Search Console e si confrontano
+          appena c&apos;è un periodo intero alle spalle.
+        </p>
+      )}
 
       {!report.leads.tracked && (
         <section className="mt-10" aria-labelledby="contatti-non-tracciati">

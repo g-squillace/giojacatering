@@ -84,6 +84,8 @@ export interface TrafficSection {
   devices: NamedRow[];
   assistants: NamedRow[];
   topPages: PageRow[];
+  comparable: boolean;
+  measurementStart: string | null;
 }
 
 export interface SearchSection {

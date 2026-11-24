@@ -37,14 +37,14 @@ export function formatDate(isoDate: string): string {
 
 export interface Delta {
   ratio: number | null;
-  direction: 'up' | 'down' | 'flat';
+  direction: 'up' | 'down' | 'flat' | 'new';
   label: string;
 }
 
 export function delta(current: number, previous: number, lowerIsBetter = false): Delta {
   if (previous === 0) {
     if (current === 0) return { ratio: null, direction: 'flat', label: 'come prima' };
-    return { ratio: null, direction: lowerIsBetter ? 'down' : 'up', label: 'nuovo' };
+    return { ratio: null, direction: 'new', label: 'nuovo' };
   }
   const ratio = (current - previous) / previous;
   const rounded = Math.abs(ratio) < 0.005 ? 0 : ratio;

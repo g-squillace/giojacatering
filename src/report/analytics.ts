@@ -4,6 +4,7 @@ import { REPORT } from "@/report/config";
 import type { NamedRow, PageRow, PeriodRange } from "@/report/types";
 
 const DATA_API = "https://analyticsdata.googleapis.com/v1beta";
+const EARLIEST_GA4_DATE = "2015-08-14";
 
 export const LEAD_EVENTS = [
   "generate_lead",
@@ -150,6 +151,7 @@ export async function fetchAnalytics(
   current: AnalyticsPeriod;
   previous: AnalyticsTotals;
   previousEvents: NamedRow[];
+  measurementStart: string | null;
 }> {
   const property = propertyId();
   if (property === null) throw new Error("GA4_PROPERTY_ID non è configurata");
@@ -213,6 +215,13 @@ export async function fetchAnalytics(
           orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
           limit: 100,
         },
+        {
+          dateRanges: [{ startDate: EARLIEST_GA4_DATE, endDate: "yesterday" }],
+          dimensions: [{ name: "date" }],
+          metrics: [{ name: "sessions" }],
+          orderBys: [{ dimension: { dimensionName: "date" } }],
+          limit: 1,
+        },
       ],
     }),
   ]);
@@ -257,7 +266,10 @@ export async function fetchAnalytics(
   }
   assistants.sort((left, right) => right.value - left.value);
 
+  const firstDay = readRows(secondaryReports[4])[0]?.dimensions[0] ?? "";
+
   return {
+    measurementStart: firstDay === "" ? null : ga4DateToIso(firstDay),
     current: {
       totals: totalsFromRows(readRows(primaryReports[1])),
       daily,

@@ -72,6 +72,7 @@ function demoAnalytics(): {
   current: AnalyticsPeriod;
   previous: AnalyticsTotals;
   previousEvents: NamedRow[];
+  measurementStart: string | null;
 } {
   const daily = new Map<string, { sessions: number; users: number }>();
   return {
@@ -86,6 +87,7 @@ function demoAnalytics(): {
     },
     previous: sample.SAMPLE_PREVIOUS_TOTALS,
     previousEvents: [...sample.SAMPLE_PREVIOUS_EVENTS],
+    measurementStart: null,
   };
 }
 
@@ -223,6 +225,10 @@ export async function buildSiteReport(
     LEAD_EVENTS.includes(row.label)
   );
 
+  const trafficComparable =
+    analytics.measurementStart === null ||
+    analytics.measurementStart <= previousPeriod.start;
+
   const report: SiteReport = {
     period,
     previousPeriod,
@@ -261,6 +267,8 @@ export async function buildSiteReport(
       devices: analytics.current.devices,
       assistants: analytics.current.assistants,
       topPages: analytics.current.pages,
+      comparable: trafficComparable,
+      measurementStart: analytics.measurementStart,
     },
     search: {
       clicks: {
