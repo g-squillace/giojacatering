@@ -1,5 +1,5 @@
 export const REPORT = {
-  ga4PropertyId: "",
+  ga4PropertyId: "548367509",
   ga4MeasurementId: "G-Y1W8GVKBH9",
   searchConsoleSiteUrl: "https://giojacatering.it/",
   siteName: "GioJa Catering",
