@@ -8,6 +8,7 @@ import Iubenda from "@/components/Footer/ExternalServices/Iubenda";
 import GoogleAnalytics from "@/components/Footer/ExternalServices/GoogleAnalytics";
 import FacebookPixel from "@/components/Footer/ExternalServices/FacebookPixel";
 import MenuFooter from "@/components/Footer/MenuFooter";
+import LeadTracking from "@/components/Footer/ExternalServices/LeadTracking";
 
 type Props = {
   data: any;
@@ -40,10 +41,10 @@ const Footer = ({ data, lng }: Props) => {
   return (
     <>
       <footer>
-        <div className="bg-primary text-primary-content/60 xl:px-32">
+        <div className="bg-primary text-primary-content xl:px-32">
           <div className="container px-6 mx-auto py-6">
             <div className="grid gap-2 md:flex md:justify-between xl:items-center ">
-              <div className="text-xs text-gray-light xl:flex xl:justify-between xl:gap-2">
+              <div className="text-xs xl:flex xl:justify-between xl:gap-2">
                 <span className="">
                   © {year} {rea}
                 </span>
@@ -61,7 +62,7 @@ const Footer = ({ data, lng }: Props) => {
                   </ExternalLink>
                 </div>
               </div>
-              <div className="text-xs text-gray-light">
+              <div className="text-xs">
                 <a
                   href={`https://www.iubenda.com/privacy-policy/${iubendaPolicyId}`}
                   title={`Privacy Policy`}
@@ -91,6 +92,23 @@ const Footer = ({ data, lng }: Props) => {
                     {translate("preferencePolicy", lng)}
                   </span>
                 </a>
+                <a
+                  href="/report"
+                  rel="nofollow"
+                  className="mt-2 inline-flex min-h-[44px] items-center gap-2 hover:underline hover:underline-offset-4 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:mt-0 md:ml-3"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                    focusable="false"
+                    className="h-3.5 w-3.5 fill-current"
+                  >
+                    <rect x="1" y="9" width="3" height="6" />
+                    <rect x="6.5" y="5" width="3" height="10" />
+                    <rect x="12" y="1" width="3" height="14" />
+                  </svg>
+                  Andamento del sito
+                </a>
               </div>
             </div>
           </div>
@@ -108,6 +126,7 @@ const Footer = ({ data, lng }: Props) => {
         <>
           <GoogleAnalytics />
           <FacebookPixel />
+          <LeadTracking />
         </>
       )}
     </>

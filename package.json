@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "node --test src/report/*.test.mts",
     "fix": "node ./scripts/fix.mjs",
     "locales": "zx ./scripts/locales.mjs",
     "parse": "ts-node ./scripts/parseSiteStructure.ts",

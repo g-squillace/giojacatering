@@ -8,6 +8,7 @@ import CheckboxCustom from "@/components/Form/CheckboxCustom";
 import CustomIcon from "@/components/Blocks/CustomIcon";
 import { motion, Variants } from "framer-motion";
 import ButtonBlock from "../Blocks/ButtonBlock";
+import { trackLead } from "@/components/Footer/ExternalServices/LeadTracking";
 
 type PropsContactForm = {
   locale: SiteLocale;
@@ -43,6 +44,7 @@ const ContactForm = ({ locale }: PropsContactForm) => {
     }).then((res) => res.json());
 
     if (res.ok || res.status === "success") {
+      trackLead("form_submit_success", "form contatti");
       setResult("success");
     } else {
       setResult("error");

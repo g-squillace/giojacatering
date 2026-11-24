@@ -56,6 +56,15 @@ const config: Config = {
       screens: {
         "3xl": "1920px",
       },
+      keyframes: {
+        "report-bar": {
+          "0%, 100%": { transform: "scaleY(0.4)" },
+          "50%": { transform: "scaleY(1)" },
+        },
+      },
+      animation: {
+        "report-bar": "report-bar 1.1s ease-in-out infinite",
+      },
     },
   },
 };
