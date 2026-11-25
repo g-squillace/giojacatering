@@ -52,6 +52,13 @@ export async function POST(request: Request): Promise<NextResponse> {
       )} clic, posizione media ${formatDecimal(row.position, 1)}`
   );
 
+  const themeUrl = `${REPORT.siteUrl}/report?settimane=${weeks}&indietro=${periodsBack}#tema-${signal.id}`;
+
+  const promptBlock =
+    session.role === "agency"
+      ? ["", "Prompt da lanciare nel repository:", "", signal.prompt]
+      : [];
+
   const message = [
     `Richiesta di stima da ${REPORT.siteName} tramite il cruscotto del sito.`,
     "",
@@ -75,6 +82,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     `Obiettivo: ${signal.goal}`,
     "",
     `Richiesta inviata da: ${session.user}`,
+    `Il tema nel cruscotto: ${themeUrl}`,
+    ...promptBlock,
   ].join("\n");
 
   const subject = `Stima ${REPORT.siteName}: ${signal.service}`;

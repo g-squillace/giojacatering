@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { REPORT } from "@/report/config";
 import {
   delta,
@@ -363,7 +363,7 @@ function UpsellCard({
 }) {
   const [copied, setCopied] = useState(false);
   return (
-    <li className={CARD}>
+    <li id={`tema-${signal.id}`} className={`${CARD} scroll-mt-8`}>
       <h3 className={PREFIX}>{signal.service}</h3>
       <p className="mt-2 text-sm tabular-nums lining-nums">
         {formatNumber(signal.impressions)} viste e{" "}
@@ -454,6 +454,12 @@ export default function ReportView({
 
   const comparableTraffic = (pair: MetricPair): MetricPair | undefined =>
     report.traffic.comparable ? pair : undefined;
+
+  useEffect(() => {
+    const anchor = window.location.hash.slice(1);
+    if (anchor === "") return;
+    document.getElementById(anchor)?.scrollIntoView({ block: "start" });
+  }, []);
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-10 lg:py-16 3xl:max-w-[88rem]">
